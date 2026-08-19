@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BackHome - Iniciar sesión</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #dff6ff, #eef2ff, #f8e8ff);
+        }
+
+        .login-container {
+            width: 400px;
+            padding: 40px;
+            border-radius: 25px;
+            background: rgba(255,255,255,0.85);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #222;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 30px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 16px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #6c63ff;
+            box-shadow: 0 0 10px rgba(108,99,255,.2);
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-size: 17px;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(118,75,162,.3);
+        }
+
+        .error {
+            background: #ffe1e1;
+            color: #c62828;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .success {
+            background: #e1ffe8;
+            color: #218838;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .registro {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .registro a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <h1>Bienvenido a BackHome</h1>
+
+    <p class="subtitle">Inicia sesión para continuar</p>
+
+    <div th:if="${param.error}" class="error">
+        Correo o contraseña incorrectos.
+    </div>
+
+    <div th:if="${param.logout}" class="success">
+        Has cerrado sesión correctamente.
+    </div>
+
+    <form method="post" action="/login">
+
+        <input
+            type="email"
+            name="correo"
+            placeholder="Correo electrónico"
+            required
+        >
+
+        <input
+            type="password"
+            name="password"
+            placeholder="Contraseña"
+            required
+        >
+
+        <button type="submit">
+            Iniciar sesión
+        </button>
+
+    </form>
+
+    <div class="registro">
+        ¿No tienes cuenta?
+        <a href="/registro">Crear cuenta</a>
+    </div>
+
+</div>
+
+</body>
+</html>

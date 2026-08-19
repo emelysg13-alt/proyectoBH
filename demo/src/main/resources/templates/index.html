@@ -3,13 +3,773 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BackHome</title>
+
+    <title>BackHome | Encuentra tu nuevo hogar</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #050816;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* =========================
+           FONDO ANIMADO
+        ========================= */
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: #6c2cff;
+            border-radius: 50%;
+            filter: blur(180px);
+            opacity: 0.22;
+            top: -250px;
+            left: -200px;
+            z-index: -2;
+            animation: float1 10s ease-in-out infinite;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: #00d4ff;
+            border-radius: 50%;
+            filter: blur(180px);
+            opacity: 0.15;
+            bottom: -200px;
+            right: -150px;
+            z-index: -2;
+            animation: float2 12s ease-in-out infinite;
+        }
+
+        @keyframes float1 {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(100px, 80px);
+            }
+        }
+
+        @keyframes float2 {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(-80px, -60px);
+            }
+        }
+
+        /* =========================
+           PARTICULAS
+        ========================= */
+
+        .particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: particleMove linear infinite;
+        }
+
+        @keyframes particleMove {
+            from {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0.6;
+            }
+
+            80% {
+                opacity: 0.6;
+            }
+
+            to {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(1150px, 92%);
+            padding: 15px 25px;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(10, 15, 35, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #7c5cff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #d6d9e5;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            padding: 11px 18px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: 0.3s;
+            display: inline-block;
+        }
+
+        .btn-login {
+            color: white;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .btn-login:hover {
+            background: rgba(255,255,255,0.12);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            color: white;
+            background: linear-gradient(135deg, #7c5cff, #4d8dff);
+            box-shadow: 0 0 25px rgba(124,92,255,0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 35px rgba(124,92,255,0.5);
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 140px 20px 80px;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 950px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 30px;
+            background: rgba(124,92,255,0.12);
+            border: 1px solid rgba(124,92,255,0.3);
+            color: #bdb1ff;
+            font-size: 13px;
+            margin-bottom: 25px;
+            animation: appear 1s ease;
+        }
+
+        .hero h1 {
+            font-size: clamp(50px, 8vw, 95px);
+            line-height: 0.95;
+            letter-spacing: -5px;
+            margin-bottom: 30px;
+            animation: appear 1s ease 0.1s both;
+        }
+
+        .gradient-text {
+            background: linear-gradient(
+                90deg,
+                #ffffff,
+                #9b86ff,
+                #62d9ff,
+                #ffffff
+            );
+            background-size: 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientMove 6s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0%,100% {
+                background-position: 0%;
+            }
+
+            50% {
+                background-position: 100%;
+            }
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: auto;
+            color: #9da5bd;
+            font-size: 18px;
+            line-height: 1.7;
+            animation: appear 1s ease 0.2s both;
+        }
+
+        .hero-buttons {
+            margin-top: 35px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            animation: appear 1s ease 0.3s both;
+        }
+
+        .hero-buttons .btn {
+            padding: 15px 25px;
+            font-size: 15px;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================
+           TARJETAS
+        ========================= */
+
+        .section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: #8e96ad;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            position: relative;
+            padding: 30px;
+            border-radius: 25px;
+            background: rgba(255,255,255,0.045);
+            border: 1px solid rgba(255,255,255,0.09);
+            backdrop-filter: blur(15px);
+            transition: 0.4s;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: #765cff;
+            filter: blur(80px);
+            opacity: 0;
+            transition: 0.4s;
+            top: -70px;
+            right: -70px;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(124,92,255,0.35);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .card:hover::before {
+            opacity: 0.5;
+        }
+
+        .icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 18px;
+            font-size: 28px;
+            background: rgba(124,92,255,0.15);
+            margin-bottom: 25px;
+        }
+
+        .card h3 {
+            font-size: 21px;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: #929ab1;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* =========================
+           ESTADISTICAS
+        ========================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 70px;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 30px 15px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.035);
+            border: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .stat h3 {
+            font-size: 35px;
+            margin-bottom: 5px;
+            color: #9f8cff;
+        }
+
+        .stat p {
+            color: #7f879d;
+            font-size: 13px;
+        }
+
+        /* =========================
+           CTA
+        ========================= */
+
+        .cta {
+            margin: 50px auto 100px;
+            max-width: 1100px;
+            padding: 70px 30px;
+            text-align: center;
+            border-radius: 35px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(124,92,255,0.18),
+                    rgba(0,212,255,0.08)
+                );
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: #765cff;
+            filter: blur(120px);
+            opacity: 0.25;
+            top: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .cta h2 {
+            position: relative;
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            position: relative;
+            color: #9ba3b9;
+            margin-bottom: 30px;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            border-top: 1px solid rgba(255,255,255,0.07);
+            padding: 35px 20px;
+            text-align: center;
+            color: #666e83;
+            font-size: 13px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 850px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero h1 {
+                letter-spacing: -3px;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            nav {
+                padding: 12px 15px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .nav-buttons .btn {
+                padding: 9px 12px;
+                font-size: 12px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title h2,
+            .cta h2 {
+                font-size: 32px;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-    <h1>¡BackHome funciona con Spring Boot! 🐾</h1>
+    <!-- PARTICULAS -->
+    <div class="particles" id="particles"></div>
 
-    <p>El proyecto está conectado correctamente.</p>
+    <!-- NAVBAR -->
+    <nav>
+
+        <div class="logo">
+            Back<span>Home</span>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#nosotros">Nosotros</a></li>
+        </ul>
+
+        <div class="nav-buttons">
+            <a href="/login" class="btn btn-login">
+                Iniciar sesión
+            </a>
+
+            <a href="/registro" class="btn btn-primary">
+                Registrarme
+            </a>
+        </div>
+
+    </nav>
+
+
+    <!-- HERO -->
+
+    <section class="hero" id="inicio">
+
+        <div class="hero-content">
+
+            <div class="badge">
+                ✦ La nueva forma de encontrar tu hogar
+            </div>
+
+            <h1>
+                Encuentra el
+                <span class="gradient-text">
+                    lugar donde
+                    perteneces.
+                </span>
+            </h1>
+
+            <p>
+                Bienvenido a BackHome. Una plataforma moderna para
+                descubrir, gestionar y encontrar espacios pensados
+                para ti.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="/registro" class="btn btn-primary">
+                    🚀 Comenzar ahora
+                </a>
+
+                <a href="#servicios" class="btn btn-login">
+                    Descubrir más
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SERVICIOS -->
+
+    <section class="section" id="servicios">
+
+        <div class="section-title">
+
+            <h2>
+                Todo lo que necesitas
+            </h2>
+
+            <p>
+                Una experiencia sencilla, rápida y pensada para ti.
+            </p>
+
+        </div>
+
+
+        <div class="cards">
+
+            <div class="card">
+
+                <div class="icon">
+                    🏠
+                </div>
+
+                <h3>
+                    Encuentra tu hogar
+                </h3>
+
+                <p>
+                    Explora diferentes opciones y encuentra
+                    el espacio perfecto para comenzar una
+                    nueva etapa.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="icon">
+                    ⚡
+                </div>
+
+                <h3>
+                    Todo más rápido
+                </h3>
+
+                <p>
+                    Una plataforma diseñada para que puedas
+                    gestionar tus procesos de forma rápida
+                    y sencilla.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="icon">
+                    🔐
+                </div>
+
+                <h3>
+                    Seguro y confiable
+                </h3>
+
+                <p>
+                    Tu información se mantiene protegida
+                    mediante nuestro sistema de autenticación.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ESTADISTICAS -->
+
+        <div class="stats">
+
+            <div class="stat">
+                <h3>24/7</h3>
+                <p>Disponible</p>
+            </div>
+
+            <div class="stat">
+                <h3>100%</h3>
+                <p>Experiencia digital</p>
+            </div>
+
+            <div class="stat">
+                <h3>∞</h3>
+                <p>Posibilidades</p>
+            </div>
+
+            <div class="stat">
+                <h3>1</h3>
+                <p>Gran plataforma</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CTA -->
+
+    <section class="cta" id="nosotros">
+
+        <h2>
+            Tu próximo hogar
+            comienza aquí.
+        </h2>
+
+        <p>
+            Crea tu cuenta y descubre todo lo que BackHome
+            tiene preparado para ti.
+        </p>
+
+        <a href="/registro" class="btn btn-primary">
+            Crear mi cuenta ✨
+        </a>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        © 2026 BackHome — Todos los derechos reservados.
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        const particlesContainer =
+            document.getElementById("particles");
+
+        for (let i = 0; i < 70; i++) {
+
+            const particle =
+                document.createElement("div");
+
+            particle.classList.add("particle");
+
+            particle.style.left =
+                Math.random() * 100 + "%";
+
+            particle.style.animationDuration =
+                (5 + Math.random() * 10) + "s";
+
+            particle.style.animationDelay =
+                Math.random() * 10 + "s";
+
+            particle.style.opacity =
+                Math.random();
+
+            particlesContainer.appendChild(particle);
+        }
+
+    </script>
 
 </body>
 </html>
