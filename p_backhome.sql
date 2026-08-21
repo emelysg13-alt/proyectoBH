@@ -50,8 +50,6 @@ CREATE TABLE personas (
 
     numero_tel VARCHAR(20) NOT NULL,
 
-    estrato TINYINT UNSIGNED NULL,
-
     password VARCHAR(255) NOT NULL,
 
     estado ENUM(

@@ -16,23 +16,38 @@ public class Persona {
     @Column(name = "id_persona")
     private Integer idPersona;
 
-    @Column(name = "nombre", nullable = false)
-    private String nombre;
+    @Column(name = "t_documento_id", nullable = false)
+    private String tipoDocumentoId;
 
-    @Column(name = "apellido", nullable = false)
-    private String apellido;
+    @Column(name = "n_documento", nullable = false, unique = true)
+    private String numeroDocumento;
 
-    @Column(name = "documento", nullable = false, unique = true)
-    private String documento;
+    @Column(name = "primer_nombre", nullable = false)
+    private String primerNombre;
 
-    @Column(name = "telefono")
-    private String telefono;
+    @Column(name = "segundo_nombre")
+    private String segundoNombre;
 
-    @Column(name = "correo", nullable = false, unique = true)
-    private String correo;
+    @Column(name = "primer_apellido", nullable = false)
+    private String primerApellido;
+
+    @Column(name = "segundo_apellido")
+    private String segundoApellido;
+
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
+
+    @Column(name = "numero_tel", nullable = false)
+    private String numeroTel;
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "estado")
+    private String estado;
+
+    @Column(name = "foto_perfil")
+    private String fotoPerfil;
 
     public Persona() {
     }
@@ -45,45 +60,70 @@ public class Persona {
         this.idPersona = idPersona;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getTipoDocumentoId() {
+        return tipoDocumentoId;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setTipoDocumentoId(String tipoDocumentoId) {
+        this.tipoDocumentoId = tipoDocumentoId;
     }
 
-    public String getApellido() {
-        return apellido;
+    public String getNumeroDocumento() {
+        return numeroDocumento;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setNumeroDocumento(String numeroDocumento) {
+        this.numeroDocumento = numeroDocumento;
     }
 
-    public String getDocumento() {
-        return documento;
+    public String getPrimerNombre() {
+        return primerNombre;
     }
 
-    public void setDocumento(String documento) {
-        this.documento = documento;
+    public void setPrimerNombre(String primerNombre) {
+        this.primerNombre = primerNombre;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public String getSegundoNombre() {
+        return segundoNombre;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setSegundoNombre(String segundoNombre) {
+        this.segundoNombre = segundoNombre;
     }
 
-    public String getCorreo() {
-        return correo;
+    public String getPrimerApellido() {
+        return primerApellido;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setPrimerApellido(String primerApellido) {
+        this.primerApellido = primerApellido;
     }
+
+    public String getSegundoApellido() {
+        return segundoApellido;
+    }
+
+    public void setSegundoApellido(String segundoApellido) {
+        this.segundoApellido = segundoApellido;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getNumeroTel() {
+        return numeroTel;
+    }
+
+    public void setNumeroTel(String numeroTel) {
+        this.numeroTel = numeroTel;
+    }
+
 
     public String getPassword() {
         return password;
@@ -91,5 +131,21 @@ public class Persona {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getFotoPerfil() {
+        return fotoPerfil;
+    }
+
+    public void setFotoPerfil(String fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
     }
 }
