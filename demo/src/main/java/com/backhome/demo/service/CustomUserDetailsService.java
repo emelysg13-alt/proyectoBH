@@ -10,37 +10,29 @@ import com.backhome.demo.model.Persona;
 import com.backhome.demo.repository.PersonaRepository;
 
 @Service
-public class CustomUserDetailsService
-        implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService {
 
     private final PersonaRepository personaRepository;
 
-    public CustomUserDetailsService(
-            PersonaRepository personaRepository) {
-
+    public CustomUserDetailsService(PersonaRepository personaRepository) {
         this.personaRepository = personaRepository;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String correo)
+    public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
 
-        Persona persona =
-                personaRepository.findByCorreo(correo)
-                    .orElseThrow(() ->
+        Persona persona = personaRepository.findByEmail(email)
+                .orElseThrow(() ->
                         new UsernameNotFoundException(
-                            "Usuario no encontrado: " + correo
+                                "Usuario no encontrado: " + email
                         )
-                    );
+                );
 
         return User.builder()
-
-                .username(persona.getCorreo())
-
+                .username(persona.getEmail())
                 .password(persona.getPassword())
-
                 .roles("CLIENTE")
-
                 .build();
     }
 }

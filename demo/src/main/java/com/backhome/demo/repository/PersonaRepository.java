@@ -6,12 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.backhome.demo.model.Persona;
 
-public interface PersonaRepository
-        extends JpaRepository<Persona, Integer> {
+public interface PersonaRepository extends JpaRepository<Persona, Integer> {
 
-    Optional<Persona> findByCorreo(String correo);
+    Optional<Persona> findByEmail(String email);
 
-    boolean existsByCorreo(String correo);
+    boolean existsByEmail(String email);
 
-    boolean existsByDocumento(String documento);
+    boolean existsByNumeroDocumento(String numeroDocumento);
 }
