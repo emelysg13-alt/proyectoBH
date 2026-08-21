@@ -27,10 +27,6 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    /**
-     * Registra una persona y posteriormente
-     * la relaciona como cliente.
-     */
     @Transactional
     public void registrarCliente(
 
@@ -50,14 +46,20 @@ public class AuthService {
 
             String password) {
 
-        // Limpiar datos básicos
+        // ============================
+        // LIMPIAR DATOS
+        // ============================
+
         email = email.trim().toLowerCase();
+
         numeroDocumento = numeroDocumento.trim();
 
         primerNombre = primerNombre.trim();
+
         primerApellido = primerApellido.trim();
 
         if (segundoNombre != null) {
+
             segundoNombre = segundoNombre.trim();
 
             if (segundoNombre.isEmpty()) {
@@ -66,6 +68,7 @@ public class AuthService {
         }
 
         if (segundoApellido != null) {
+
             segundoApellido = segundoApellido.trim();
 
             if (segundoApellido.isEmpty()) {
@@ -75,14 +78,21 @@ public class AuthService {
 
         numeroTel = numeroTel.trim();
 
-        // Validar email
+        // ============================
+        // VALIDAR EMAIL
+        // ============================
+
         if (personaRepository.existsByEmail(email)) {
+
             throw new IllegalArgumentException(
                     "Ya existe una persona registrada con ese email."
             );
         }
 
-        // Validar documento
+        // ============================
+        // VALIDAR DOCUMENTO
+        // ============================
+
         if (personaRepository.existsByNumeroDocumento(
                 numeroDocumento)) {
 
@@ -91,71 +101,65 @@ public class AuthService {
             );
         }
 
-        // Crear Persona
+        // ============================
+        // CREAR PERSONA
+        // ============================
+
         Persona persona = new Persona();
 
         persona.setTipoDocumentoId(tipoDocumentoId);
+
         persona.setNumeroDocumento(numeroDocumento);
 
         persona.setPrimerNombre(primerNombre);
+
         persona.setSegundoNombre(segundoNombre);
 
         persona.setPrimerApellido(primerApellido);
+
         persona.setSegundoApellido(segundoApellido);
 
         persona.setEmail(email);
+
         persona.setNumeroTel(numeroTel);
+
         persona.setEstrato(estrato);
 
-        /*
-         * La contraseña NUNCA se guarda directamente.
-         * Se guarda utilizando BCrypt.
-         */
+        // ============================
+        // ENCRIPTAR CONTRASEÑA
+        // ============================
+
         persona.setPassword(
                 passwordEncoder.encode(password)
         );
 
-        /*
-         * Tu BD tiene:
-         *
-         * activo
-         * bloqueado
-         * suspendido
-         *
-         * Una cuenta nueva comienza activa.
-         */
-        persona.setEstado(EstadoPersona.activo);
+        // ============================
+        // ESTADO INICIAL
+        // ============================
 
-        /*
-         * Primero guardamos PERSONA.
-         *
-         * Esto permite obtener:
-         * personas.id_persona
-         */
+        persona.setEstado(
+                EstadoPersona.activo
+        );
+
+        // ============================
+        // GUARDAR PERSONA
+        // ============================
+
         Persona personaGuardada =
                 personaRepository.save(persona);
 
-        /*
-         * Después creamos CLIENTE.
-         *
-         * cliente.persona_id apunta a:
-         *
-         * personas.id_persona
-         */
+        // ============================
+        // CREAR CLIENTE
+        // ============================
+
         Cliente cliente = new Cliente();
 
         cliente.setPersona(personaGuardada);
 
-        /*
-         * NO hacemos:
-         *
-         * cliente.setIdCliente(
-         *     personaGuardada.getIdPersona()
-         * );
-         *
-         * porque id_cliente es AUTO_INCREMENT
-         * en tu base de datos.
-         */
+        // ============================
+        // GUARDAR CLIENTE
+        // ============================
+
         clienteRepository.save(cliente);
     }
 }

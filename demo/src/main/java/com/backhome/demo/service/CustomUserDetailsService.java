@@ -28,8 +28,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
 
+        // Normalizar el correo
         String emailNormalizado = email.trim().toLowerCase();
 
+        // Buscar la persona en la base de datos
         Persona persona = personaRepository
                 .findByEmail(emailNormalizado)
                 .orElseThrow(() ->
