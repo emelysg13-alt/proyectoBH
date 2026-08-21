@@ -19,10 +19,6 @@ public class AuthService {
             PersonaRepository personaRepository,
             ClienteRepository clienteRepository,
             PasswordEncoder passwordEncoder) {
-
-        this.personaRepository = personaRepository;
-        this.clienteRepository = clienteRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     public boolean registrarCliente(
