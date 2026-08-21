@@ -7,8 +7,18 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.backhome.demo.service.CustomUserDetailsService;
+
 @Configuration
 public class SecurityConfig {
+
+    private final CustomUserDetailsService customUserDetailsService;
+
+    public SecurityConfig(
+            CustomUserDetailsService customUserDetailsService) {
+
+        this.customUserDetailsService = customUserDetailsService;
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -22,48 +32,79 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(auth -> auth
 
-                // PÁGINAS PÚBLICAS
                 .requestMatchers(
                     "/",
                     "/login",
                     "/registro",
                     "/css/**",
                     "/js/**",
-                    "/images/**"
+                    "/images/**",
+                    "/favicon.ico"
                 ).permitAll()
 
-                // ADMIN
                 .requestMatchers("/admin/**")
                 .hasRole("ADMIN")
 
-                // CLIENTE
                 .requestMatchers("/cliente/**")
                 .hasRole("CLIENTE")
 
-                // TODO LO DEMÁS REQUIERE LOGIN
                 .anyRequest()
                 .authenticated()
             )
 
-            // LOGIN
             .formLogin(form -> form
 
                 .loginPage("/login")
 
-                // EL INPUT DEL FORMULARIO SE LLAMA "correo"
-                .usernameParameter("correo")
+                .loginProcessingUrl("/login")
+
+                .usernameParameter("email")
 
                 .passwordParameter("password")
 
-                .defaultSuccessUrl("/", true)
+                .successHandler(
+                    (request, response, authentication) -> {
+
+                        boolean esAdministrador =
+                            authentication
+                                .getAuthorities()
+                                .stream()
+                                .anyMatch(
+                                    autoridad ->
+                                        autoridad
+                                            .getAuthority()
+                                            .equals("ROLE_ADMIN")
+                                );
+
+                        if (esAdministrador) {
+
+                            response.sendRedirect(
+                                "/admin/dashboard"
+                            );
+
+                        } else {
+
+                            response.sendRedirect(
+                                "/cliente/dashboard"
+                            );
+                        }
+                    }
+                )
+
+                .failureUrl("/login?error")
 
                 .permitAll()
             )
 
-            // LOGOUT
             .logout(logout -> logout
 
+                .logoutUrl("/logout")
+
                 .logoutSuccessUrl("/login?logout")
+
+                .invalidateHttpSession(true)
+
+                .deleteCookies("JSESSIONID")
 
                 .permitAll()
             );

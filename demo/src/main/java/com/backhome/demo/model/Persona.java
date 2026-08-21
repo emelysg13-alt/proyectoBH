@@ -1,7 +1,11 @@
 package com.backhome.demo.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -37,14 +41,24 @@ public class Persona {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
+    @Column(name = "email_verified_at")
+    private LocalDateTime emailVerifiedAt;
+
     @Column(name = "numero_tel", nullable = false)
     private String numeroTel;
+
+    @Column(name = "estrato")
+    private Integer estrato;
 
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "estado")
-    private String estado;
+    private EstadoPersona estado;
+
+    @Column(name = "remember_token")
+    private String rememberToken;
 
     @Column(name = "foto_perfil")
     private String fotoPerfil;
@@ -116,6 +130,14 @@ public class Persona {
         this.email = email;
     }
 
+    public LocalDateTime getEmailVerifiedAt() {
+        return emailVerifiedAt;
+    }
+
+    public void setEmailVerifiedAt(LocalDateTime emailVerifiedAt) {
+        this.emailVerifiedAt = emailVerifiedAt;
+    }
+
     public String getNumeroTel() {
         return numeroTel;
     }
@@ -124,6 +146,13 @@ public class Persona {
         this.numeroTel = numeroTel;
     }
 
+    public Integer getEstrato() {
+        return estrato;
+    }
+
+    public void setEstrato(Integer estrato) {
+        this.estrato = estrato;
+    }
 
     public String getPassword() {
         return password;
@@ -133,12 +162,20 @@ public class Persona {
         this.password = password;
     }
 
-    public String getEstado() {
+    public EstadoPersona getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(EstadoPersona estado) {
         this.estado = estado;
+    }
+
+    public String getRememberToken() {
+        return rememberToken;
+    }
+
+    public void setRememberToken(String rememberToken) {
+        this.rememberToken = rememberToken;
     }
 
     public String getFotoPerfil() {

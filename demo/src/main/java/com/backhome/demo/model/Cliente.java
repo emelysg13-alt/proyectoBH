@@ -19,7 +19,11 @@ public class Cliente {
     private Integer idCliente;
 
     @OneToOne
-    @JoinColumn(name = "persona_id", nullable = false, unique = true)
+    @JoinColumn(
+        name = "persona_id",
+        nullable = false,
+        unique = true
+    )
     private Persona persona;
 
     public Cliente() {

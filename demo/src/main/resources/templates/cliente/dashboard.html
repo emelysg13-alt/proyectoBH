@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Mi cuenta | BackHome</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #fff7fa;
+            color: #4a3f42;
+        }
+
+        .navbar {
+            background: white;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 15px rgba(190,120,145,.12);
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: #d9829a;
+        }
+
+        .usuario {
+            color: #806f75;
+        }
+
+        .contenedor {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 25px;
+        }
+
+        .bienvenida {
+            background: linear-gradient(
+                135deg,
+                #f8dce4,
+                #fff
+            );
+
+            padding: 35px;
+            border-radius: 25px;
+            margin-bottom: 30px;
+        }
+
+        .bienvenida h1 {
+            margin-top: 0;
+            color: #c96f89;
+        }
+
+        .bienvenida p {
+            font-size: 17px;
+        }
+
+        .tarjetas {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(250px, 1fr));
+
+            gap: 20px;
+        }
+
+        .tarjeta {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+
+            box-shadow:
+                0 10px 30px
+                rgba(190,120,145,.12);
+        }
+
+        .tarjeta h3 {
+            color: #d9829a;
+            margin-top: 0;
+        }
+
+        .dato {
+            margin: 12px 0;
+        }
+
+        .dato strong {
+            display: block;
+            color: #806f75;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .estado {
+            display: inline-block;
+            background: #e4f4e8;
+            color: #427052;
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .boton {
+            border: none;
+            background: #d9829a;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .boton:hover {
+            background: #c96f89;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        🐾 BackHome
+    </div>
+
+    <div class="usuario">
+
+        Hola,
+        <strong
+            th:text="${persona.primerNombre}">
+        </strong>
+
+    </div>
+
+</nav>
+
+
+<main class="contenedor">
+
+    <section class="bienvenida">
+
+        <h1>
+            ¡Bienvenido,
+            <span th:text="${persona.primerNombre}">
+            </span>! 🐾
+        </h1>
+
+        <p>
+            Este es tu espacio personal en BackHome.
+            Desde aquí podrás gestionar la información
+            relacionada con tus mascotas.
+        </p>
+
+    </section>
+
+
+    <section class="tarjetas">
+
+
+        <div class="tarjeta">
+
+            <h3>👤 Mis datos</h3>
+
+            <div class="dato">
+
+                <strong>Nombre</strong>
+
+                <span
+                    th:text="${persona.primerNombre + ' ' +
+                             persona.primerApellido}">
+                </span>
+
+            </div>
+
+
+            <div class="dato">
+
+                <strong>Documento</strong>
+
+                <span
+                    th:text="${persona.numeroDocumento}">
+                </span>
+
+            </div>
+
+
+            <div class="dato">
+
+                <strong>Correo electrónico</strong>
+
+                <span
+                    th:text="${persona.email}">
+                </span>
+
+            </div>
+
+
+            <div class="dato">
+
+                <strong>Teléfono</strong>
+
+                <span
+                    th:text="${persona.numeroTel}">
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="tarjeta">
+
+            <h3>🐾 Mi cuenta</h3>
+
+            <div class="dato">
+
+                <strong>Estado</strong>
+
+                <span
+                    class="estado"
+                    th:text="${persona.estado}">
+                </span>
+
+            </div>
+
+            <p>
+                Tu cuenta está activa y lista
+                para utilizar BackHome.
+            </p>
+
+        </div>
+
+
+        <div class="tarjeta">
+
+            <h3>🐶 Mis mascotas</h3>
+
+            <p>
+                Aquí podrás consultar y gestionar
+                las mascotas asociadas a tu cuenta.
+            </p>
+
+            <button class="boton">
+                Ver mis mascotas
+            </button>
+
+        </div>
+
+
+    </section>
+
+</main>
+
+
+<form
+    th:action="@{/logout}"
+    method="post"
+    style="text-align:center; margin-bottom:30px;">
+
+    <input
+        type="hidden"
+        th:name="${_csrf.parameterName}"
+        th:value="${_csrf.token}">
+
+    <button
+        type="submit"
+        class="boton">
+
+        Cerrar sesión
+
+    </button>
+
+</form>
+
+</body>
+
+</html>
