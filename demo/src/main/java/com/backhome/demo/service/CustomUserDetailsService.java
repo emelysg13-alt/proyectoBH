@@ -35,7 +35,7 @@ public class CustomUserDetailsService
 
         return User.builder()
 
-                .username(persona.getCorreo())
+                .username(persona.getEmail())
 
                 .password(persona.getPassword())
 

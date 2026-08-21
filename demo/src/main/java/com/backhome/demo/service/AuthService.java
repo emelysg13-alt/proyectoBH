@@ -1,12 +1,12 @@
 package com.backhome.demo.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import com.backhome.demo.model.Cliente;
 import com.backhome.demo.model.Persona;
 import com.backhome.demo.repository.ClienteRepository;
 import com.backhome.demo.repository.PersonaRepository;
-
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
 @Service
 public class AuthService {
@@ -46,17 +46,20 @@ public class AuthService {
         // Crear Persona
         Persona persona = new Persona();
 
-        persona.setNombre(nombre);
-        persona.setApellido(apellido);
-        persona.setDocumento(documento);
-        persona.setTelefono(telefono);
-        persona.setCorreo(correo);
+        persona.setPrimerNombre(nombre);
+        persona.setPrimerApellido(apellido);
+        persona.setNumeroDocumento(documento);
+        persona.setNumeroTel(telefono);
+        persona.setEmail(correo);
 
         // Guardar contraseña encriptada
-        persona.setPassword(passwordEncoder.encode(password));
+        persona.setPassword(
+                passwordEncoder.encode(password)
+        );
 
         // Guardar persona
-        Persona personaGuardada = personaRepository.save(persona);
+        Persona personaGuardada =
+                personaRepository.save(persona);
 
         // Crear cliente
         Cliente cliente = new Cliente();

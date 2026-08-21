@@ -15,6 +15,9 @@ import com.backhome.demo.repository.PersonaRepository;
 @Controller
 public class AuthController {
 
+    private static final String REDIRECT_REGISTRO = "redirect:/registro";
+    private static final String REDIRECT_LOGIN = "redirect:/login";
+
     private final PersonaRepository personaRepository;
     private final ClienteRepository clienteRepository;
     private final PasswordEncoder passwordEncoder;
@@ -51,7 +54,7 @@ public class AuthController {
                     "Las contraseñas no coinciden."
             );
 
-            return "redirect:/registro";
+            return REDIRECT_REGISTRO;
         }
 
         if (personaRepository.existsByCorreo(correo)) {
@@ -60,7 +63,7 @@ public class AuthController {
                     "Ya existe una cuenta con ese correo."
             );
 
-            return "redirect:/registro";
+            return REDIRECT_REGISTRO;
         }
 
         if (personaRepository.existsByDocumento(documento)) {
@@ -69,16 +72,16 @@ public class AuthController {
                     "Ya existe una persona con ese documento."
             );
 
-            return "redirect:/registro";
+            return REDIRECT_REGISTRO;
         }
 
         Persona persona = new Persona();
 
-        persona.setNombre(nombre);
-        persona.setApellido(apellido);
-        persona.setDocumento(documento);
-        persona.setTelefono(telefono);
-        persona.setCorreo(correo);
+        persona.setPrimerNombre(nombre);
+        persona.setPrimerApellido(apellido);
+        persona.setNumeroDocumento(documento);
+        persona.setNumeroTel(telefono);
+        persona.setEmail(correo);
 
         persona.setPassword(
                 passwordEncoder.encode(password)
@@ -99,6 +102,6 @@ public class AuthController {
                 "¡Cuenta creada correctamente! Ahora puedes iniciar sesión."
         );
 
-        return "redirect:/login";
+        return REDIRECT_LOGIN;
     }
 }
