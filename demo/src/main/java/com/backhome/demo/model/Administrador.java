@@ -2,9 +2,10 @@ package com.backhome.demo.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -13,23 +14,23 @@ import jakarta.persistence.Table;
 public class Administrador {
 
     @Id
-    @Column(name = "id_administrador")
-    private Integer idAdministrador;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_admin")
+    private Integer idAdmin;
 
     @OneToOne
-    @MapsId
-    @JoinColumn(name = "id_administrador")
+    @JoinColumn(name = "persona_id", nullable = false, unique = true)
     private Persona persona;
 
     public Administrador() {
     }
 
-    public Integer getIdAdministrador() {
-        return idAdministrador;
+    public Integer getIdAdmin() {
+        return idAdmin;
     }
 
-    public void setIdAdministrador(Integer idAdministrador) {
-        this.idAdministrador = idAdministrador;
+    public void setIdAdmin(Integer idAdmin) {
+        this.idAdmin = idAdmin;
     }
 
     public Persona getPersona() {
