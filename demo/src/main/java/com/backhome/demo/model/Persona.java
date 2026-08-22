@@ -47,9 +47,6 @@ public class Persona {
     @Column(name = "numero_tel", nullable = false)
     private String numeroTel;
 
-    @Column(name = "estrato")
-    private Integer estrato;
-
     @Column(name = "password", nullable = false)
     private String password;
 
@@ -146,13 +143,6 @@ public class Persona {
         this.numeroTel = numeroTel;
     }
 
-    public Integer getEstrato() {
-        return estrato;
-    }
-
-    public void setEstrato(Integer estrato) {
-        this.estrato = estrato;
-    }
 
     public String getPassword() {
         return password;

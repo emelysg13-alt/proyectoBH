@@ -123,7 +123,6 @@ public class AuthService {
 
         persona.setNumeroTel(numeroTel);
 
-        persona.setEstrato(estrato);
 
         // ============================
         // ENCRIPTAR CONTRASEÑA

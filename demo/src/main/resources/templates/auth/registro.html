@@ -163,9 +163,7 @@
             th:text="${error}">
         </div>
 
-        <form
-            th:action="@{/registro}"
-            method="post">
+       <form th:action="@{/registro}" th:object="${registroForm}" method="post">
 
             <input
                 type="hidden"
@@ -180,28 +178,10 @@
                         Tipo de documento
                     </label>
 
-                    <select
-                        id="t_documento_id"
-                        name="t_documento_id"
-                        required>
-
-                        <option value="">
-                            Selecciona
-                        </option>
-
-                        <option value="CC">
-                            Cédula de ciudadanía
-                        </option>
-
-                        <option value="TI">
-                            Tarjeta de identidad
-                        </option>
-
-                        <option value="CE">
-                            Cédula de extranjería
-                        </option>
-
-                    </select>
+                    <select th:field="*{tipoDocumentoId}" class="form-control" required>
+    <option value="">Seleccione un tipo de documento...</option>
+    <option th:each="tipo : ${tiposDocumento}" th:value="${tipo.idTDoc}" th:text="${tipo.nDoc}"></option>
+</select>
 
                 </div>
 
@@ -211,12 +191,7 @@
                         Número de documento
                     </label>
 
-                    <input
-                        type="text"
-                        id="n_documento"
-                        name="n_documento"
-                        maxlength="20"
-                        required>
+                    <input type="text" th:field="*{numeroDocumento}" class="form-control" required />
 
                 </div>
 
@@ -230,12 +205,7 @@
                         Primer nombre
                     </label>
 
-                    <input
-                        type="text"
-                        id="primer_nombre"
-                        name="primer_nombre"
-                        maxlength="100"
-                        required>
+                    <input type="text" th:field="*{primerNombre}" class="form-control" required />
 
                 </div>
 
@@ -245,11 +215,7 @@
                         Segundo nombre
                     </label>
 
-                    <input
-                        type="text"
-                        id="segundo_nombre"
-                        name="segundo_nombre"
-                        maxlength="100">
+                    <input type="text" th:field="*{segundoNombre}" class="form-control" />
 
                 </div>
 
@@ -263,12 +229,7 @@
                         Primer apellido
                     </label>
 
-                    <input
-                        type="text"
-                        id="primer_apellido"
-                        name="primer_apellido"
-                        maxlength="100"
-                        required>
+                    <input type="text" th:field="*{primerApellido}" class="form-control" required />
 
                 </div>
 
@@ -278,11 +239,7 @@
                         Segundo apellido
                     </label>
 
-                    <input
-                        type="text"
-                        id="segundo_apellido"
-                        name="segundo_apellido"
-                        maxlength="100">
+                   <input type="text" th:field="*{segundoApellido}" class="form-control" />
 
                 </div>
 
@@ -296,12 +253,7 @@
                         Email
                     </label>
 
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        maxlength="150"
-                        required>
+                   <input type="email" th:field="*{email}" class="form-control" required />
 
                 </div>
 
@@ -311,41 +263,13 @@
                         Número de teléfono
                     </label>
 
-                    <input
-                        type="tel"
-                        id="numero_tel"
-                        name="numero_tel"
-                        maxlength="20"
-                        required>
+                   <input type="text" th:field="*{numeroTel}" class="form-control" required />
 
                 </div>
 
             </div>
 
-            <div class="campo">
-
-                <label for="estrato">
-                    Estrato
-                </label>
-
-                <select
-                    id="estrato"
-                    name="estrato">
-
-                    <option value="">
-                        Selecciona tu estrato
-                    </option>
-
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-
-                </select>
-
-            </div>
+        
 
             <div class="fila">
 
@@ -355,11 +279,7 @@
                         Contraseña
                     </label>
 
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        required>
+                    <input type="password" th:field="*{password}" class="form-control" required />
 
                 </div>
 
