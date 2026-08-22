@@ -46,9 +46,9 @@ public class AuthService {
 
             String password) {
 
-        // ============================
+        // =====================================================
         // LIMPIAR DATOS
-        // ============================
+        // =====================================================
 
         email = email.trim().toLowerCase();
 
@@ -78,20 +78,20 @@ public class AuthService {
 
         numeroTel = numeroTel.trim();
 
-        // ============================
+        // =====================================================
         // VALIDAR EMAIL
-        // ============================
+        // =====================================================
 
-        if (personaRepository.existsByEmail(email)) {
+        if (personaRepository.existsByEmailIgnoreCase(email)) {
 
             throw new IllegalArgumentException(
                     "Ya existe una persona registrada con ese email."
             );
         }
 
-        // ============================
+        // =====================================================
         // VALIDAR DOCUMENTO
-        // ============================
+        // =====================================================
 
         if (personaRepository.existsByNumeroDocumento(
                 numeroDocumento)) {
@@ -101,9 +101,9 @@ public class AuthService {
             );
         }
 
-        // ============================
+        // =====================================================
         // CREAR PERSONA
-        // ============================
+        // =====================================================
 
         Persona persona = new Persona();
 
@@ -123,41 +123,40 @@ public class AuthService {
 
         persona.setNumeroTel(numeroTel);
 
-
-        // ============================
+        // =====================================================
         // ENCRIPTAR CONTRASEÑA
-        // ============================
+        // =====================================================
 
         persona.setPassword(
                 passwordEncoder.encode(password)
         );
 
-        // ============================
+        // =====================================================
         // ESTADO INICIAL
-        // ============================
+        // =====================================================
 
         persona.setEstado(
                 EstadoPersona.activo
         );
 
-        // ============================
+        // =====================================================
         // GUARDAR PERSONA
-        // ============================
+        // =====================================================
 
         Persona personaGuardada =
                 personaRepository.save(persona);
 
-        // ============================
+        // =====================================================
         // CREAR CLIENTE
-        // ============================
+        // =====================================================
 
         Cliente cliente = new Cliente();
 
         cliente.setPersona(personaGuardada);
 
-        // ============================
+        // =====================================================
         // GUARDAR CLIENTE
-        // ============================
+        // =====================================================
 
         clienteRepository.save(cliente);
     }

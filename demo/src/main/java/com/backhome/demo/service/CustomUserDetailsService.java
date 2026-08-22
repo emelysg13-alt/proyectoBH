@@ -22,49 +22,120 @@ public class CustomUserDetailsService implements UserDetailsService {
             PersonaRepository personaRepository,
             ClienteRepository clienteRepository,
             AdministradorRepository administradorRepository) {
+
         this.personaRepository = personaRepository;
         this.clienteRepository = clienteRepository;
         this.administradorRepository = administradorRepository;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        // Normalizar el correo
+    public UserDetails loadUserByUsername(String email)
+            throws UsernameNotFoundException {
+
+        // =====================================================
+        // 1. VALIDAR CORREO
+        // =====================================================
+
+        if (email == null || email.trim().isEmpty()) {
+            throw new UsernameNotFoundException(
+                    "El correo es obligatorio."
+            );
+        }
+
         String emailNormalizado = email.trim().toLowerCase();
 
-        // Buscar la persona en la base de datos
-        Persona persona = personaRepository.findByEmail(emailNormalizado)
-                .orElseThrow(() -> new UsernameNotFoundException("No existe una persona con ese email."));
+        // =====================================================
+        // 2. BUSCAR PERSONA
+        // =====================================================
 
-        // Validar estado de la cuenta
+        Persona persona = personaRepository
+                .findByEmailIgnoreCase(emailNormalizado)
+                .orElseThrow(() ->
+                        new UsernameNotFoundException(
+                                "No existe una cuenta con ese correo."
+                        )
+                );
+
+        // =====================================================
+        // 3. VALIDAR ESTADO DE LA CUENTA
+        // =====================================================
+
         if (persona.getEstado() == null) {
-            throw new UsernameNotFoundException("La cuenta no tiene un estado válido.");
+            throw new UsernameNotFoundException(
+                    "La cuenta no tiene un estado válido."
+            );
         }
 
-        String estado = persona.getEstado().name().toLowerCase();
+        switch (persona.getEstado()) {
 
-        if (estado.equals("bloqueado")) {
-            throw new UsernameNotFoundException("La cuenta se encuentra bloqueada.");
-        }
-        if (estado.equals("suspendido")) {
-            throw new UsernameNotFoundException("La cuenta se encuentra suspendida.");
-        }
-        if (!estado.equals("activo")) {
-            throw new UsernameNotFoundException("La cuenta no está activa.");
+            case activo:
+                break;
+
+            case bloqueado:
+                throw new UsernameNotFoundException(
+                        "La cuenta se encuentra bloqueada."
+                );
+
+            case suspendido:
+                throw new UsernameNotFoundException(
+                        "La cuenta se encuentra suspendida."
+                );
+
+            default:
+                throw new UsernameNotFoundException(
+                        "La cuenta no está activa."
+                );
         }
 
-        // Verificar roles y asignar de forma dinámica
-        boolean esAdmin = administradorRepository.existsByPersona_IdPersona(persona.getIdPersona());
-        boolean esCliente = clienteRepository.existsByPersona_IdPersona(persona.getIdPersona());
+        // =====================================================
+        // 4. VALIDAR CONTRASEÑA
+        // =====================================================
+
+        if (persona.getPassword() == null ||
+                persona.getPassword().trim().isEmpty()) {
+
+            throw new UsernameNotFoundException(
+                    "La cuenta no tiene una contraseña configurada."
+            );
+        }
+
+        // =====================================================
+        // 5. COMPROBAR PERFIL / ROL
+        // =====================================================
+
+        boolean esAdmin =
+                administradorRepository
+                        .existsByPersona_IdPersona(
+                                persona.getIdPersona()
+                        );
+
+        boolean esCliente =
+                clienteRepository
+                        .existsByPersona_IdPersona(
+                                persona.getIdPersona()
+                        );
 
         if (!esAdmin && !esCliente) {
-            throw new UsernameNotFoundException("La persona no tiene un rol o perfil asociado en el sistema.");
+            throw new UsernameNotFoundException(
+                    "La persona no tiene un perfil asociado."
+            );
         }
 
-        // Construir el usuario para Spring Security con su rol correspondiente
-        var userBuilder = User.builder()
-                .username(persona.getEmail())
-                .password(persona.getPassword());
+        // =====================================================
+        // 6. CREAR USUARIO PARA SPRING SECURITY
+        // =====================================================
+
+        User.UserBuilder userBuilder = User
+                .withUsername(persona.getEmail())
+                .password(persona.getPassword())
+                .disabled(false)
+                .accountExpired(false)
+                .accountLocked(false)
+                .credentialsExpired(false);
+
+        // =====================================================
+        // 7. ASIGNAR ROL
+        // =====================================================
 
         if (esAdmin) {
             userBuilder.roles("ADMIN");

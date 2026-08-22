@@ -8,9 +8,9 @@ import com.backhome.demo.model.Persona;
 
 public interface PersonaRepository extends JpaRepository<Persona, Integer> {
 
-    Optional<Persona> findByEmail(String email);
+    Optional<Persona> findByEmailIgnoreCase(String email);
 
-    boolean existsByEmail(String email);
+    boolean existsByEmailIgnoreCase(String email);
 
     boolean existsByNumeroDocumento(String numeroDocumento);
 }

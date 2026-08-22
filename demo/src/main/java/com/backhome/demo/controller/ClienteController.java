@@ -25,7 +25,7 @@ public class ClienteController {
         String email = authentication.getName();
 
         Persona persona = personaRepository
-                .findByEmail(email)
+                .findByEmailIgnoreCase(email)
                 .orElseThrow(() ->
                         new RuntimeException(
                                 "No se encontró la persona."

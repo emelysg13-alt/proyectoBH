@@ -143,7 +143,6 @@ public class Persona {
         this.numeroTel = numeroTel;
     }
 
-
     public String getPassword() {
         return password;
     }

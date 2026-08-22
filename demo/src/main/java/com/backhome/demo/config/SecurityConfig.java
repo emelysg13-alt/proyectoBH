@@ -16,19 +16,41 @@ public class SecurityConfig {
 
     private final CustomUserDetailsService customUserDetailsService;
 
-    public SecurityConfig(CustomUserDetailsService customUserDetailsService) {
+    public SecurityConfig(
+            CustomUserDetailsService customUserDetailsService) {
+
         this.customUserDetailsService = customUserDetailsService;
     }
+
+    // =====================================================
+    // PASSWORD ENCODER
+    // =====================================================
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    // =====================================================
+    // SPRING SECURITY
+    // =====================================================
+
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(
+            HttpSecurity http) throws Exception {
+
         http
+
+            // Usar nuestro servicio personalizado
+            .userDetailsService(customUserDetailsService)
+
+            // =================================================
+            // AUTORIZACIÓN
+            // =================================================
+
             .authorizeHttpRequests(auth -> auth
+
+                // Páginas públicas
                 .requestMatchers(
                     "/",
                     "/login",
@@ -38,31 +60,85 @@ public class SecurityConfig {
                     "/images/**",
                     "/favicon.ico"
                 ).permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/cliente/**").hasRole("CLIENTE")
-                .anyRequest().authenticated()
+
+                // Administrador
+                .requestMatchers("/admin/**")
+                    .hasRole("ADMIN")
+
+                // Cliente
+                .requestMatchers("/cliente/**")
+                    .hasRole("CLIENTE")
+
+                // Todo lo demás requiere autenticación
+                .anyRequest()
+                    .authenticated()
             )
+
+            // =================================================
+            // LOGIN
+            // =================================================
+
             .formLogin(form -> form
+
+                // Página que nosotros diseñamos
                 .loginPage("/login")
+
+                // Spring Security procesa este POST
                 .loginProcessingUrl("/login")
+
+                // Campo del formulario
                 .usernameParameter("email")
+
+                // Campo de contraseña
                 .passwordParameter("password")
-                // Redirección dinámica basada en roles usando operador ternario
-                .successHandler((request, response, auth) -> {
-                    String redirectUrl = auth.getAuthorities().stream()
-                            .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")) 
-                            ? "/admin/dashboard" 
-                            : "/cliente/dashboard";
-                    response.sendRedirect(redirectUrl);
+
+                // Login correcto
+                .successHandler((request, response, authentication) -> {
+
+                    boolean esAdmin =
+                            authentication.getAuthorities()
+                                .stream()
+                                .anyMatch(authority ->
+                                    authority.getAuthority()
+                                        .equals("ROLE_ADMIN")
+                                );
+
+                    if (esAdmin) {
+
+                        response.sendRedirect(
+                                "/admin/dashboard"
+                        );
+
+                    } else {
+
+                        response.sendRedirect(
+                                "/cliente/dashboard"
+                        );
+                    }
                 })
+
+                // Login incorrecto
                 .failureUrl("/login?error")
+
                 .permitAll()
             )
+
+            // =================================================
+            // LOGOUT
+            // =================================================
+
             .logout(logout -> logout
+
                 .logoutUrl("/logout")
+
                 .logoutSuccessUrl("/login?logout")
+
                 .invalidateHttpSession(true)
+
+                .clearAuthentication(true)
+
                 .deleteCookies("JSESSIONID")
+
                 .permitAll()
             );
 
