@@ -17,7 +17,7 @@
 
 <body>
 
-    <!-- FONDO DECORATIVO GLOBAL (mismo lenguaje visual que el login) -->
+    <!-- FONDO DECORATIVO GLOBAL -->
     <div class="site-background" aria-hidden="true">
         <span class="blob blob-one"></span>
         <span class="blob blob-two"></span>
@@ -58,16 +58,14 @@
             <div class="hero-content-wrapper">
                 <div class="hero-text-block">
                     <h1>Cada mascota merece un camino seguro de <span class="accent-text">regreso a casa.</span></h1>
-                    <p>Publica tu reporte en minutos y dale seguimiento hasta el reencuentro, con el apoyo de tu comunidad en Bogotá.</p>
+                    <p>Haz seguimiento a mascotas perdidas o encontradas en Bogotá, desde el primer reporte hasta el reencuentro.</p>
                     <div class="hero-buttons-container">
-                        <a th:href="@{/registro}" class="btn-primary-action">Reportar ahora</a>
+                        <a th:href="@{/registro}" class="btn-primary-action">Iniciar seguimiento</a>
                     </div>
                 </div>
 
-                <div class="hero-visual-card">
-                    <div class="hero-logo-container">
-                        <img th:src="@{/images/logo-backhome.png}" src="logo.png" alt="Logo BackHome" class="hero-central-logo">
-                    </div>
+                <div class="hero-logo-container">
+                    <img th:src="@{/images/logo-backhome.png}" src="logo.png" alt="Logo BackHome" class="hero-central-logo">
                 </div>
             </div>
         </section>
@@ -147,6 +145,11 @@
                     </ul>
 
                     <div class="module-preview-stub">
+                        <div class="map-illustration" aria-hidden="true">
+                            <span class="map-pin pin-lost"></span>
+                            <span class="map-pin pin-found"></span>
+                            <span class="map-pin pin-ghost"></span>
+                        </div>
                         <span class="stub-badge soon">Próximamente</span>
                         <p>Módulo de mapas interactivos en desarrollo activo</p>
                     </div>
@@ -161,8 +164,10 @@
                     <p>Tu aporte mantiene la plataforma activa y respalda a los hogares de paso que cuidan mascotas mientras encuentran su camino de regreso.</p>
 
                     <div class="module-preview-stub">
+                        <span class="support-illustration" aria-hidden="true">💞</span>
                         <span class="stub-badge active">Aportes Abiertos</span>
-                        <a th:href="@{/donaciones}" class="btn-stub-action">Ver formas de ayudar</a>
+                        <p>Cada aporte ayuda a un hogar de paso</p>
+                        <a th:href="@{/donaciones}" class="btn-stub-action">Ver formas de ayudar <span aria-hidden="true">→</span></a>
                     </div>
                 </div>
 
