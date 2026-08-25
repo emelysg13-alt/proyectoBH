@@ -1,5 +1,6 @@
 package com.backhome.demo.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,4 +17,10 @@ public interface PersonaRepository extends JpaRepository<Persona, Integer> {
     boolean existsByNumeroDocumento(String numeroDocumento);
 
     long countByEstado(EstadoPersona estado);
+
+    List<Persona> findAllByOrderByIdPersonaDesc();
+
+    List<Persona> findByEstadoOrderByIdPersonaDesc(
+            EstadoPersona estado
+    );
 }

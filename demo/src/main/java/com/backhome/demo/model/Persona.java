@@ -47,6 +47,9 @@ public class Persona {
     @Column(name = "numero_tel", nullable = false)
     private String numeroTel;
 
+    @Column(name = "estrato")
+    private Integer estrato;
+
     @Column(name = "password", nullable = false)
     private String password;
 
@@ -59,6 +62,12 @@ public class Persona {
 
     @Column(name = "foto_perfil")
     private String fotoPerfil;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     public Persona() {
     }
@@ -143,6 +152,14 @@ public class Persona {
         this.numeroTel = numeroTel;
     }
 
+    public Integer getEstrato() {
+        return estrato;
+    }
+
+    public void setEstrato(Integer estrato) {
+        this.estrato = estrato;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -173,5 +190,21 @@ public class Persona {
 
     public void setFotoPerfil(String fotoPerfil) {
         this.fotoPerfil = fotoPerfil;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Editar usuario | BackHome</title>
+
+    <link
+        rel="stylesheet"
+        th:href="@{/css/admin/admin.css}">
+
+    <style>
+
+        .editar-page {
+            padding:30px;
+        }
+
+        .editar-header {
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:25px;
+        }
+
+        .kicker {
+            color:#c96e8d;
+            font-size:11px;
+            font-weight:800;
+            text-transform:uppercase;
+            letter-spacing:1px;
+        }
+
+        .title {
+            margin:7px 0 5px;
+            color:#4d4247;
+            font-size:30px;
+            font-weight:850;
+        }
+
+        .description {
+            margin:0;
+            color:#8b7b81;
+            font-size:13px;
+        }
+
+        .back-button {
+            padding:11px 16px;
+            border-radius:14px;
+            background:white;
+            border:1px solid #f1dce3;
+            color:#8a596b;
+            text-decoration:none;
+            font-size:12px;
+            font-weight:700;
+        }
+
+        .form-card {
+            max-width:950px;
+            background:white;
+            border:1px solid #f1e0e5;
+            border-radius:22px;
+            padding:25px;
+            box-shadow:0 15px 40px rgba(100,70,80,.07);
+        }
+
+        .form-grid {
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:18px;
+        }
+
+        .field.full {
+            grid-column:1 / -1;
+        }
+
+        .field label {
+            display:block;
+            margin-bottom:7px;
+            color:#786970;
+            font-size:11px;
+            font-weight:800;
+        }
+
+        .field input,
+        .field select {
+            width:100%;
+            box-sizing:border-box;
+            padding:12px;
+            border:1px solid #eadde1;
+            border-radius:12px;
+            background:#fffafb;
+            color:#55484e;
+            outline:none;
+            font-size:12px;
+        }
+
+        .field input:focus,
+        .field select:focus {
+            border-color:#dda1b6;
+            background:white;
+        }
+
+        .form-actions {
+            display:flex;
+            justify-content:flex-end;
+            gap:10px;
+            margin-top:25px;
+            padding-top:20px;
+            border-top:1px solid #f3e8eb;
+        }
+
+        .button {
+            padding:11px 18px;
+            border:0;
+            border-radius:12px;
+            text-decoration:none;
+            cursor:pointer;
+            font-size:12px;
+            font-weight:800;
+        }
+
+        .cancel {
+            background:#f7eef1;
+            color:#805f6b;
+        }
+
+        .save {
+            background:#d87898;
+            color:white;
+        }
+
+        @media(max-width:750px) {
+
+            .form-grid {
+                grid-template-columns:1fr;
+            }
+
+            .field.full {
+                grid-column:auto;
+            }
+
+            .editar-header {
+                align-items:flex-start;
+                flex-direction:column;
+                gap:15px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body class="admin-page">
+
+
+<div class="admin-shell">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="admin-sidebar">
+
+        <div>
+
+            <div class="brand">
+
+                <img
+                    th:src="@{/images/logo-backhome.png}"
+                    alt="BackHome">
+
+                <div>
+
+                    <div class="brand-title">
+                        BackHome
+                    </div>
+
+                    <span class="brand-subtitle">
+                        Panel administrativo
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="menu-title">
+                MENÚ PRINCIPAL
+            </div>
+
+
+            <nav class="admin-nav">
+
+                <a th:href="@{/admin/dashboard}">
+                    <span class="nav-icon">🏠</span>
+                    <span>Dashboard</span>
+                </a>
+
+                <a
+                    th:href="@{/admin/usuarios}"
+                    class="active">
+
+                    <span class="nav-icon">👥</span>
+                    <span>Gestionar usuarios</span>
+
+                </a>
+
+                <a href="#">
+                    <span class="nav-icon">🐾</span>
+                    <span>Gestionar seguimientos</span>
+                </a>
+
+                <a href="#">
+                    <span class="nav-icon">💗</span>
+                    <span>Gestionar donaciones</span>
+                </a>
+
+                <a href="#">
+                    <span class="nav-icon">💬</span>
+                    <span>Soporte</span>
+                </a>
+
+                <a href="#">
+                    <span class="nav-icon">🏠</span>
+                    <span>Gestionar refugios</span>
+                </a>
+
+                <a href="#">
+                    <span class="nav-icon">📊</span>
+                    <span>Reportes PDF</span>
+                </a>
+
+            </nav>
+
+        </div>
+
+
+        <div class="sidebar-bottom">
+
+            <form
+                th:action="@{/logout}"
+                method="post">
+
+                <button
+                    class="logout-btn"
+                    type="submit">
+
+                    <span class="nav-icon">
+                        ↪
+                    </span>
+
+                    <span>
+                        Cerrar sesión
+                    </span>
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- CONTENIDO -->
+
+    <main class="admin-main">
+
+
+        <header class="admin-topbar">
+
+            <div class="breadcrumb">
+
+                BackHome
+                <span>›</span>
+
+                <strong>
+                    Editar usuario
+                </strong>
+
+            </div>
+
+        </header>
+
+
+
+        <section class="editar-page">
+
+
+            <div class="editar-header">
+
+                <div>
+
+                    <div class="kicker">
+                        ✏️ Administración
+                    </div>
+
+                    <h1 class="title">
+                        Editar usuario
+                    </h1>
+
+                    <p class="description">
+
+                        Actualiza la información personal
+                        del usuario seleccionado.
+
+                    </p>
+
+                </div>
+
+
+                <a
+                    class="back-button"
+                    th:href="@{/admin/usuarios/{id}(id=${usuario.idPersona})}">
+
+                    ← Volver al usuario
+
+                </a>
+
+            </div>
+
+
+
+            <!-- ERROR -->
+
+            <div
+                th:if="${error}"
+                style="max-width:950px; box-sizing:border-box; padding:13px 16px; margin-bottom:15px; border-radius:13px; background:#fff0f0; color:#b45e5e; font-size:12px; font-weight:700;"
+                th:text="${error}">
+            </div>
+
+
+
+            <!-- FORM -->
+
+            <section class="form-card">
+
+
+                <form
+                    method="post"
+                    th:action="@{/admin/usuarios/{id}/editar(id=${usuario.idPersona})}">
+
+
+                    <div class="form-grid">
+
+
+                        <!-- TIPO DOCUMENTO -->
+
+                        <div class="field">
+
+                            <label>
+                                Tipo de documento
+                            </label>
+
+                            <select
+                                name="tipoDocumentoId"
+                                required>
+
+                                <option
+                                    th:each="tipo : ${tiposDocumento}"
+                                    th:value="${tipo.idTDoc}"
+                                    th:text="${tipo.nDoc}"
+                                    th:selected="${tipo.idTDoc == usuario.tipoDocumentoId}">
+
+                                    Documento
+
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- NUMERO -->
+
+                        <div class="field">
+
+                            <label>
+                                Número de documento
+                            </label>
+
+                            <input
+                                type="text"
+                                name="numeroDocumento"
+                                maxlength="20"
+                                required
+                                th:value="${usuario.numeroDocumento}">
+
+                        </div>
+
+
+
+                        <!-- PRIMER NOMBRE -->
+
+                        <div class="field">
+
+                            <label>
+                                Primer nombre
+                            </label>
+
+                            <input
+                                type="text"
+                                name="primerNombre"
+                                required
+                                th:value="${usuario.primerNombre}">
+
+                        </div>
+
+
+
+                        <!-- SEGUNDO NOMBRE -->
+
+                        <div class="field">
+
+                            <label>
+                                Segundo nombre
+                            </label>
+
+                            <input
+                                type="text"
+                                name="segundoNombre"
+                                th:value="${usuario.segundoNombre}">
+
+                        </div>
+
+
+
+                        <!-- PRIMER APELLIDO -->
+
+                        <div class="field">
+
+                            <label>
+                                Primer apellido
+                            </label>
+
+                            <input
+                                type="text"
+                                name="primerApellido"
+                                required
+                                th:value="${usuario.primerApellido}">
+
+                        </div>
+
+
+
+                        <!-- SEGUNDO APELLIDO -->
+
+                        <div class="field">
+
+                            <label>
+                                Segundo apellido
+                            </label>
+
+                            <input
+                                type="text"
+                                name="segundoApellido"
+                                th:value="${usuario.segundoApellido}">
+
+                        </div>
+
+
+
+                        <!-- EMAIL -->
+
+                        <div class="field full">
+
+                            <label>
+                                Correo electrónico
+                            </label>
+
+                            <input
+                                type="email"
+                                name="email"
+                                required
+                                th:value="${usuario.email}">
+
+                        </div>
+
+
+
+                        <!-- TELEFONO -->
+
+                        <div class="field">
+
+                            <label>
+                                Teléfono
+                            </label>
+
+                            <input
+                                type="text"
+                                name="numeroTel"
+                                required
+                                th:value="${usuario.numeroTel}">
+
+                        </div>
+
+
+
+                        <!-- ESTRATO -->
+
+                        <div class="field">
+
+                            <label>
+                                Estrato
+                            </label>
+
+                            <input
+                                type="number"
+                                name="estrato"
+                                min="0"
+                                max="6"
+                                th:value="${usuario.estrato}">
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="form-actions">
+
+
+                        <a
+                            class="button cancel"
+                            th:href="@{/admin/usuarios/{id}(id=${usuario.idPersona})}">
+
+                            Cancelar
+
+                        </a>
+
+
+                        <button
+                            class="button save"
+                            type="submit">
+
+                            💾 Guardar cambios
+
+                        </button>
+
+
+                    </div>
+
+
+                </form>
+
+
+            </section>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+</body>
+
+</html>
