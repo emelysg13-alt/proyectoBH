@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.backhome.demo.model.EstadoPersona;
 import com.backhome.demo.model.Persona;
 
 public interface PersonaRepository extends JpaRepository<Persona, Integer> {
@@ -13,4 +14,6 @@ public interface PersonaRepository extends JpaRepository<Persona, Integer> {
     boolean existsByEmailIgnoreCase(String email);
 
     boolean existsByNumeroDocumento(String numeroDocumento);
+
+    long countByEstado(EstadoPersona estado);
 }
