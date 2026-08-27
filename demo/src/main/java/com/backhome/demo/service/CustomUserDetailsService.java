@@ -42,7 +42,8 @@ public class CustomUserDetailsService implements UserDetailsService {
             );
         }
 
-        String emailNormalizado = email.trim().toLowerCase();
+        String emailNormalizado =
+                email.trim().toLowerCase();
 
         // =====================================================
         // 2. BUSCAR PERSONA
@@ -57,7 +58,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 );
 
         // =====================================================
-        // 3. VALIDAR ESTADO DE LA CUENTA
+        // 3. VALIDAR ESTADO
         // =====================================================
 
         if (persona.getEstado() == null) {
@@ -138,8 +139,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         // =====================================================
 
         if (esAdmin) {
+
             userBuilder.roles("ADMIN");
+
         } else {
+
             userBuilder.roles("CLIENTE");
         }
 

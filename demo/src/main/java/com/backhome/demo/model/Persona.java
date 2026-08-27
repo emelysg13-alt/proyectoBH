@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "personas")
@@ -47,7 +48,11 @@ public class Persona {
     @Column(name = "numero_tel", nullable = false)
     private String numeroTel;
 
-    @Column(name = "estrato")
+    /*
+     * Estrato se mantiene porque otras partes del proyecto lo utilizan,
+     * pero NO pertenece al mapeo de la tabla personas.
+     */
+    @Transient
     private Integer estrato;
 
     @Column(name = "password", nullable = false)

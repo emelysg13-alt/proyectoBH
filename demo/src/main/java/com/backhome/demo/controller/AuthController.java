@@ -50,7 +50,7 @@ public class AuthController {
     }
 
     // =====================================================
-    // MOSTRAR REGISTRO
+    // REGISTRO
     // =====================================================
 
     @GetMapping("/registro")
@@ -83,9 +83,9 @@ public class AuthController {
             RedirectAttributes redirectAttributes,
             Model model) {
 
-        // =================================================
-        // 1. VALIDACIONES DEL FORMULARIO
-        // =================================================
+        // -------------------------------------------------
+        // VALIDACIONES
+        // -------------------------------------------------
 
         if (bindingResult.hasErrors()) {
 
@@ -97,80 +97,85 @@ public class AuthController {
             return "auth/registro";
         }
 
-        // =================================================
-        // 2. NORMALIZAR DATOS
-        // =================================================
+        // -------------------------------------------------
+        // VALIDAR CONFIRMACIÓN DE CONTRASEÑA
+        // -------------------------------------------------
+
+        if (form.getPassword() == null ||
+                form.getConfirmPassword() == null ||
+                !form.getPassword().equals(
+                        form.getConfirmPassword())) {
+
+            model.addAttribute(
+                    "tiposDocumento",
+                    tipoDocumentoRepository.findAll()
+            );
+
+            model.addAttribute(
+                    "error",
+                    "Las contraseñas no coinciden."
+            );
+
+            return "auth/registro";
+        }
+
+        // -------------------------------------------------
+        // NORMALIZAR EMAIL
+        // -------------------------------------------------
 
         String email = form.getEmail()
                 .trim()
                 .toLowerCase();
 
+        // -------------------------------------------------
+        // NORMALIZAR DOCUMENTO
+        // -------------------------------------------------
+
         String numeroDocumento = form.getNumeroDocumento()
                 .trim();
 
-        // =================================================
-        // 3. CONFIRMAR CONTRASEÑA
-        // =================================================
+        // -------------------------------------------------
+        // COMPROBAR EMAIL
+        // -------------------------------------------------
 
-        if (!form.getPassword()
-                .equals(form.getConfirmPassword())) {
+        if (personaRepository.existsByEmailIgnoreCase(email)) {
 
-            redirectAttributes.addFlashAttribute(
+            model.addAttribute(
+                    "tiposDocumento",
+                    tipoDocumentoRepository.findAll()
+            );
+
+            model.addAttribute(
                     "error",
-                    "Las contraseñas no coinciden."
+                    "Ya existe una cuenta registrada con ese correo."
             );
 
-            redirectAttributes.addFlashAttribute(
-                    "registroForm",
-                    form
-            );
-
-            return "redirect:/registro";
+            return "auth/registro";
         }
 
-        // =================================================
-        // 4. COMPROBAR EMAIL
-        // =================================================
+        // -------------------------------------------------
+        // COMPROBAR DOCUMENTO
+        // -------------------------------------------------
 
-        if (personaRepository
-                .existsByEmailIgnoreCase(email)) {
+        if (personaRepository.existsByNumeroDocumento(
+                numeroDocumento)) {
 
-            redirectAttributes.addFlashAttribute(
+            model.addAttribute(
+                    "tiposDocumento",
+                    tipoDocumentoRepository.findAll()
+            );
+
+            model.addAttribute(
                     "error",
-                    "Ya existe una cuenta con ese correo."
+                    "Ya existe una persona registrada con ese número de documento."
             );
 
-            redirectAttributes.addFlashAttribute(
-                    "registroForm",
-                    form
-            );
-
-            return "redirect:/registro";
+            return "auth/registro";
         }
 
-        // =================================================
-        // 5. COMPROBAR DOCUMENTO
-        // =================================================
-
-        if (personaRepository
-                .existsByNumeroDocumento(numeroDocumento)) {
-
-            redirectAttributes.addFlashAttribute(
-                    "error",
-                    "Ya existe una persona con ese número de documento."
-            );
-
-            redirectAttributes.addFlashAttribute(
-                    "registroForm",
-                    form
-            );
-
-            return "redirect:/registro";
-        }
-
-        // =================================================
-        // 6. CREAR PERSONA
-        // =================================================
+        // -------------------------------------------------
+        // CREAR PERSONA
+        // -------------------------------------------------
 
         Persona persona = new Persona();
 
@@ -186,23 +191,35 @@ public class AuthController {
                 form.getPrimerNombre().trim()
         );
 
-        persona.setSegundoNombre(
-                form.getSegundoNombre() == null ||
-                form.getSegundoNombre().trim().isEmpty()
-                        ? null
-                        : form.getSegundoNombre().trim()
-        );
+        // Segundo nombre opcional
+        if (form.getSegundoNombre() != null &&
+                !form.getSegundoNombre().trim().isEmpty()) {
+
+            persona.setSegundoNombre(
+                    form.getSegundoNombre().trim()
+            );
+
+        } else {
+
+            persona.setSegundoNombre(null);
+        }
 
         persona.setPrimerApellido(
                 form.getPrimerApellido().trim()
         );
 
-        persona.setSegundoApellido(
-                form.getSegundoApellido() == null ||
-                form.getSegundoApellido().trim().isEmpty()
-                        ? null
-                        : form.getSegundoApellido().trim()
-        );
+        // Segundo apellido opcional
+        if (form.getSegundoApellido() != null &&
+                !form.getSegundoApellido().trim().isEmpty()) {
+
+            persona.setSegundoApellido(
+                    form.getSegundoApellido().trim()
+            );
+
+        } else {
+
+            persona.setSegundoApellido(null);
+        }
 
         persona.setEmail(email);
 
@@ -210,9 +227,11 @@ public class AuthController {
                 form.getNumeroTel().trim()
         );
 
-        // =================================================
-        // 7. ENCRIPTAR CONTRASEÑA
-        // =================================================
+        // -------------------------------------------------
+        // CONTRASEÑA
+        // -------------------------------------------------
+        // NUNCA guardamos la contraseña directamente.
+        // Siempre se guarda mediante BCrypt.
 
         persona.setPassword(
                 passwordEncoder.encode(
@@ -220,34 +239,38 @@ public class AuthController {
                 )
         );
 
-        // =================================================
-        // 8. ESTADO INICIAL
-        // =================================================
+        // -------------------------------------------------
+        // ESTADO
+        // -------------------------------------------------
 
         persona.setEstado(
                 EstadoPersona.activo
         );
 
-        // =================================================
-        // 9. GUARDAR PERSONA
-        // =================================================
+        // -------------------------------------------------
+        // GUARDAR PERSONA
+        // -------------------------------------------------
 
         Persona personaGuardada =
                 personaRepository.save(persona);
 
-        // =================================================
-        // 10. CREAR CLIENTE
-        // =================================================
+        // -------------------------------------------------
+        // CREAR CLIENTE
+        // -------------------------------------------------
 
         Cliente cliente = new Cliente();
 
         cliente.setPersona(personaGuardada);
 
+        // -------------------------------------------------
+        // GUARDAR CLIENTE
+        // -------------------------------------------------
+
         clienteRepository.save(cliente);
 
-        // =================================================
-        // 11. MENSAJE DE ÉXITO
-        // =================================================
+        // -------------------------------------------------
+        // REGISTRO EXITOSO
+        // -------------------------------------------------
 
         redirectAttributes.addFlashAttribute(
                 "success",

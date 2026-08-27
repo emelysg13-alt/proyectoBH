@@ -80,19 +80,22 @@ public class SecurityConfig {
 
             .formLogin(form -> form
 
-                // Página que nosotros diseñamos
+                // Página personalizada
                 .loginPage("/login")
 
-                // Spring Security procesa este POST
+                // Spring procesa este POST
                 .loginProcessingUrl("/login")
 
-                // Campo del formulario
+                // TU HTML utiliza name="email"
                 .usernameParameter("email")
 
-                // Campo de contraseña
+                // TU HTML utiliza name="password"
                 .passwordParameter("password")
 
-                // Login correcto
+                // =================================================
+                // LOGIN CORRECTO
+                // =================================================
+
                 .successHandler((request, response, authentication) -> {
 
                     boolean esAdmin =
@@ -117,7 +120,10 @@ public class SecurityConfig {
                     }
                 })
 
-                // Login incorrecto
+                // =================================================
+                // LOGIN INCORRECTO
+                // =================================================
+
                 .failureUrl("/login?error")
 
                 .permitAll()
