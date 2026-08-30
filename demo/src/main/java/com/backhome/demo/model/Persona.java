@@ -157,14 +157,6 @@ public class Persona {
         this.numeroTel = numeroTel;
     }
 
-    public Integer getEstrato() {
-        return estrato;
-    }
-
-    public void setEstrato(Integer estrato) {
-        this.estrato = estrato;
-    }
-
     public String getPassword() {
         return password;
     }
