@@ -57,10 +57,18 @@
         <section class="hero-welcome-section" id="inicio">
             <div class="hero-content-wrapper">
                 <div class="hero-text-block">
-                    <h1>Cada mascota merece un camino seguro de <span class="accent-text">regreso a casa.</span></h1>
+                    <span class="hero-eyebrow">🐾 Red comunitaria de rescate en Bogotá</span>
+                    <h1>Cada mascota merece un camino seguro de
+                        <span class="accent-text">
+                            regreso a casa
+                            <svg class="accent-swash" viewBox="0 0 220 20" preserveAspectRatio="none" aria-hidden="true">
+                                <path d="M2 14C40 4 90 2 110 10C130 18 180 6 218 12" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" />
+                            </svg>
+                        </span>
+                    </h1>
                     <p>Haz seguimiento a mascotas perdidas o encontradas en Bogotá, desde el primer reporte hasta el reencuentro.</p>
                     <div class="hero-buttons-container">
-                        <a th:href="@{/registro}" class="btn-primary-action">Iniciar seguimiento</a>
+                        <a th:href="@{/registro}" class="btn-primary-action">Publicar un caso</a>
                     </div>
                 </div>
 
@@ -70,107 +78,205 @@
             </div>
         </section>
 
-        <!-- SECCIÓN UNIFICADA: PROCESO DE SEGUIMIENTO Y EJEMPLO -->
+        <!-- SECCIÓN: CÓMO FUNCIONA EL SEGUIMIENTO -->
         <section class="workflow-section" id="proceso-seguimiento">
+
             <div class="section-heading-block">
-                <h2>¿Cómo funciona el proceso de seguimiento?</h2>
-                <p>Conoce la metodología del flujo de validación y observa un ejemplo real de cómo se visualiza un expediente en la plataforma.</p>
+                <h2>¿Cómo funciona el seguimiento?</h2>
+                <p>Elegí tu caso y mirá, en el mismo lugar, cómo se valida cada seguimiento hasta el reencuentro.</p>
             </div>
 
-            <div class="workflow-grid-layout">
-                <!-- Pasos del proceso -->
-                <div class="workflow-steps-list">
-                    <div class="workflow-step-card">
-                        <div class="step-number-badge">1</div>
-                        <div class="step-text-content">
-                            <h3>Registro del Reporte</h3>
-                            <p>El usuario ingresa los datos clave de la mascota, ubicación y fotografías recientes.</p>
+            <!-- Perdida / Encontrada: misma mecánica de fondo, casos distintos, validación integrada -->
+            <div class="primary-actions-grid">
+
+                <div class="primary-action-card tone-alert">
+                    <div class="primary-action-header">
+                        <span class="primary-action-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 3 2 20h20L12 3z" />
+                                <line x1="12" y1="9" x2="12" y2="14" />
+                                <line x1="12" y1="17.5" x2="12" y2="17.5" />
+                            </svg>
+                        </span>
+                        <div>
+                            <h3>Perdiste una mascota</h3>
+                            <p>Publicá los datos y una foto para que la comunidad te ayude a encontrarla.</p>
                         </div>
                     </div>
 
-                    <div class="workflow-step-card">
-                        <div class="step-number-badge">2</div>
-                        <div class="step-text-content">
-                            <h3>Validación Administrativa</h3>
-                            <p>El equipo o sistema verifica los datos y activa el estatus oficial (Perdido o En Resguardo).</p>
+                    <div class="mini-tracker">
+                        <div class="mini-step">
+                            <span class="mini-step-dot">1</span>
+                            <span class="mini-step-label">Registrás el seguimiento</span>
+                        </div>
+                        <div class="mini-step">
+                            <span class="mini-step-dot">2</span>
+                            <span class="mini-step-label">Se valida en el sistema</span>
+                        </div>
+                        <div class="mini-step">
+                            <span class="mini-step-dot">3</span>
+                            <span class="mini-step-label">La comunidad ayuda hasta encontrarla</span>
                         </div>
                     </div>
 
-                    <div class="workflow-step-card">
-                        <div class="step-number-badge">3</div>
-                        <div class="step-text-content">
-                            <h3>Monitoreo y Reencuentro</h3>
-                            <p>La comunidad visualiza el estado del expediente verificado para agilizar la recuperación.</p>
+                    <a th:href="@{/registro}" class="primary-action-cta">Publicar aviso de pérdida <span aria-hidden="true">→</span></a>
+                </div>
+
+                <div class="primary-action-card tone-hope">
+                    <div class="primary-action-header">
+                        <span class="primary-action-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 21s-7-4.6-9.5-8.7C.6 8.8 2 5 5.6 4.2 8 3.6 10 5 12 7c2-2 4-3.4 6.4-2.8C22 5 23.4 8.8 21.5 12.3 19 16.4 12 21 12 21z" />
+                            </svg>
+                        </span>
+                        <div>
+                            <h3>Encontraste una mascota</h3>
+                            <p>Informá el hallazgo para ayudar a que regrese con su familia.</p>
                         </div>
+                    </div>
+
+                    <div class="mini-tracker">
+                        <div class="mini-step">
+                            <span class="mini-step-dot">1</span>
+                            <span class="mini-step-label">Registrás el seguimiento</span>
+                        </div>
+                        <div class="mini-step">
+                            <span class="mini-step-dot">2</span>
+                            <span class="mini-step-label">Se valida en el sistema</span>
+                        </div>
+                        <div class="mini-step">
+                            <span class="mini-step-dot">3</span>
+                            <span class="mini-step-label">Ayudás a reunirla con su familia</span>
+                        </div>
+                    </div>
+
+                    <a th:href="@{/registro}" class="primary-action-cta">Publicar aviso de hallazgo <span aria-hidden="true">→</span></a>
+                </div>
+            </div>
+
+            <!-- Mapa ilustrado + expediente de ejemplo -->
+            <div class="secondary-grid">
+
+                <!-- Mapa: ilustración real con pines, leyenda y explicación -->
+                <div class="map-showcase" id="localidades-mapa">
+                    <span class="map-ribbon">Próximamente</span>
+
+                    <div class="map-illustration-frame" aria-hidden="true">
+                        <div class="map-illustration-grid"></div>
+                        <span class="map-district d-1"></span>
+                        <span class="map-district d-2"></span>
+                        <span class="map-pin-lg pin-alert" style="top:26%; left:58%;"></span>
+                        <span class="map-pin-lg pin-hope" style="top:56%; left:32%;"></span>
+                        <span class="map-pin-lg pin-resolved" style="top:42%; left:76%;"></span>
+                        <span class="map-locality-tag" style="top:20%; left:54%;">Usaquén</span>
+                        <span class="map-locality-tag" style="top:64%; left:16%;">Kennedy</span>
+                    </div>
+
+                    <div class="map-legend">
+                        <span class="map-legend-item"><span class="legend-dot pin-alert"></span> Perdido</span>
+                        <span class="map-legend-item"><span class="legend-dot pin-hope"></span> Encontrado</span>
+                        <span class="map-legend-item"><span class="legend-dot pin-resolved"></span> Resuelto</span>
+                    </div>
+
+                    <div class="map-showcase-body">
+                        <h3>Explorá por localidad</h3>
+                        <p>Cuando el mapa esté disponible, así vas a poder ver y filtrar los seguimientos activos de Bogotá.</p>
+
+                        <ul class="locality-feature-list">
+                            <li>Cada seguimiento aparece ubicado en el mapa</li>
+                            <li>Filtrás por localidad para ver solo lo que te interesa</li>
+                        </ul>
+
+                        <div class="map-cta">Ver mapa completo</div>
                     </div>
                 </div>
 
-                <!-- Tarjeta de ejemplo integrado del seguimiento -->
-                <div class="workflow-example-wrapper">
+                <!-- Expediente de ejemplo, con más información real -->
+                <div class="case-file-wrapper">
                     <span class="example-tag-label">Ejemplo de Seguimiento en Vivo</span>
 
-                    <div class="example-preview-card">
-                        <div class="example-card-media-area">
+                    <div class="case-file-card">
+                        <div class="case-file-banner">
                             <span class="status-badge-pill lost">Perdido</span>
                             <span class="status-badge-verified">✓ Verificado Admin</span>
                         </div>
-                        <div class="example-card-body-area">
-                            <h3 th:text="${caso1 != null ? caso1.titulo : 'Canela (Cachorra Mestiza)'}">Canela (Cachorra Mestiza)</h3>
-                            <p class="example-location-text"><strong>Zona:</strong> Usaquén</p>
-                            <p class="example-date-text">Actualizado: 05 Ago 2026</p>
 
-                            <!-- Botón simulado (estético / no interactivo) -->
-                            <div class="btn-mock-action">Ver expediente completo</div>
+                        <div class="case-file-body">
+                            <div class="case-file-identity">
+                                <span class="example-avatar" aria-hidden="true">🐾</span>
+                                <div>
+                                    <h3 th:text="${caso1 != null ? caso1.titulo : 'Canela (Cachorra Mestiza)'}">Canela (Cachorra Mestiza)</h3>
+                                    <p class="example-location-text"><strong>Zona:</strong> Usaquén</p>
+                                </div>
+                            </div>
+
+                            <div class="case-file-info-grid">
+                                <div class="case-file-info-item">
+                                    <span class="info-label">Raza</span>
+                                    <span class="info-value">Mestiza</span>
+                                </div>
+                                <div class="case-file-info-item">
+                                    <span class="info-label">Tamaño</span>
+                                    <span class="info-value">Pequeño</span>
+                                </div>
+                                <div class="case-file-info-item">
+                                    <span class="info-label">Color</span>
+                                    <span class="info-value">Canela</span>
+                                </div>
+                                <div class="case-file-info-item">
+                                    <span class="info-label">Estado</span>
+                                    <span class="info-value">Activo</span>
+                                </div>
+                            </div>
+
+                            <div class="case-file-timeline">
+                                <div class="timeline-item">
+                                    <span class="timeline-dot"></span>
+                                    <div>
+                                        <span class="timeline-date">03 Ago</span>
+                                        <span class="timeline-label">Seguimiento registrado</span>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <span class="timeline-dot"></span>
+                                    <div>
+                                        <span class="timeline-date">04 Ago</span>
+                                        <span class="timeline-label">Validado por el equipo</span>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <span class="timeline-dot active"></span>
+                                    <div>
+                                        <span class="timeline-date">05 Ago</span>
+                                        <span class="timeline-label">Vista por última vez en Usaquén</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="case-file-cta">Ver expediente completo</div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SECCIÓN DE MÓDULOS INTERACTIVOS (MAPA Y APOYO) -->
+        <!-- SECCIÓN DE APOYO / DONACIONES -->
         <section class="interactive-modules-section">
-            <div class="modules-grid-layout">
-
-                <!-- Módulo Mapa Interactivo -->
-                <div class="module-card-box" id="localidades-mapa">
-                    <div class="module-card-header">
-                        <span class="module-icon-emoji">🗺️</span>
-                        <h3>Mapa Interactivo Distrital</h3>
-                    </div>
-                    <p>Un mapa pensado para que ubiques, de un vistazo, qué está pasando cerca de ti.</p>
-                    <ul class="module-feature-list">
-                        <li>Filtra reportes por localidad y barrio</li>
-                        <li>Distingue casos perdidos y encontrados por color</li>
-                        <li>Encuentra rápido el reporte más cercano a tu zona</li>
-                    </ul>
-
-                    <div class="module-preview-stub">
-                        <div class="map-illustration" aria-hidden="true">
-                            <span class="map-pin pin-lost"></span>
-                            <span class="map-pin pin-found"></span>
-                            <span class="map-pin pin-ghost"></span>
-                        </div>
-                        <span class="stub-badge soon">Próximamente</span>
-                        <p>Módulo de mapas interactivos en desarrollo activo</p>
-                    </div>
+            <div class="support-showcase" id="apoyo-donaciones">
+                <div class="support-showcase-visual" aria-hidden="true">
+                    <span class="support-icon-badge">💖</span>
+                    <span class="support-dot dot-a"></span>
+                    <span class="support-dot dot-b"></span>
+                    <span class="support-dot dot-c"></span>
                 </div>
 
-                <!-- Módulo de Apoyo / Donaciones -->
-                <div class="module-card-box" id="apoyo-donaciones">
-                    <div class="module-card-header">
-                        <span class="module-icon-emoji">💖</span>
-                        <h3>Apóyanos y Sostenibilidad</h3>
-                    </div>
+                <div class="support-showcase-content">
+                    <span class="stub-badge active">Aportes Abiertos</span>
+                    <h3>Apóyanos y Sostenibilidad</h3>
                     <p>Tu aporte mantiene la plataforma activa y respalda a los hogares de paso que cuidan mascotas mientras encuentran su camino de regreso.</p>
-
-                    <div class="module-preview-stub">
-                        <span class="support-illustration" aria-hidden="true">💞</span>
-                        <span class="stub-badge active">Aportes Abiertos</span>
-                        <p>Cada aporte ayuda a un hogar de paso</p>
-                        <a th:href="@{/donaciones}" class="btn-stub-action">Ver formas de ayudar <span aria-hidden="true">→</span></a>
-                    </div>
+                    <p class="support-microcopy">Cada aporte ayuda a un hogar de paso.</p>
+                    <a th:href="@{/donaciones}" class="btn-stub-action">Ver formas de ayudar <span aria-hidden="true">→</span></a>
                 </div>
-
             </div>
         </section>
 
@@ -187,7 +293,7 @@
             </div>
 
             <div class="footer-column-links">
-                <h4>Navegación</h4>
+                <h4><span aria-hidden="true">🐾</span> Navegación</h4>
                 <ul>
                     <li><a href="#inicio">Inicio</a></li>
                     <li><a href="#proceso-seguimiento">Cómo Funciona</a></li>
@@ -197,7 +303,7 @@
             </div>
 
             <div class="footer-column-links">
-                <h4>Plataforma</h4>
+                <h4><span aria-hidden="true">🐾</span> Plataforma</h4>
                 <ul>
                     <li><a th:href="@{/login}">Iniciar Sesión</a></li>
                     <li><a th:href="@{/registro}">Registrarse</a></li>
