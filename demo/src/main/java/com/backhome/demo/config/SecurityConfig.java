@@ -22,18 +22,10 @@ public class SecurityConfig {
         this.customUserDetailsService = customUserDetailsService;
     }
 
-    // =====================================================
-    // PASSWORD ENCODER
-    // =====================================================
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    // =====================================================
-    // SPRING SECURITY
-    // =====================================================
 
     @Bean
     public SecurityFilterChain securityFilterChain(
@@ -41,16 +33,14 @@ public class SecurityConfig {
 
         http
 
-            // Usar nuestro servicio personalizado
             .userDetailsService(customUserDetailsService)
 
-            // =================================================
-            // AUTORIZACIÓN
-            // =================================================
+            // =====================================================
+            // AUTORIZACIONES
+            // =====================================================
 
             .authorizeHttpRequests(auth -> auth
 
-                // Páginas públicas
                 .requestMatchers(
                     "/",
                     "/login",
@@ -61,77 +51,82 @@ public class SecurityConfig {
                     "/favicon.ico"
                 ).permitAll()
 
-                // Administrador
                 .requestMatchers("/admin/**")
                     .hasRole("ADMIN")
 
-                // Cliente
                 .requestMatchers("/cliente/**")
                     .hasRole("CLIENTE")
 
-                // Todo lo demás requiere autenticación
                 .anyRequest()
                     .authenticated()
             )
 
-            // =================================================
+            // =====================================================
+            // CSRF
+            // =====================================================
+            //
+            // Login y registro no utilizarán el token CSRF
+            // porque sus formularios serán HTML normales.
+            //
+            // El resto de la aplicación sigue protegido.
+            // =====================================================
+
+            .csrf(csrf -> csrf
+                .ignoringRequestMatchers(
+                    "/login",
+                    "/registro"
+                )
+            )
+
+            // =====================================================
             // LOGIN
-            // =================================================
+            // =====================================================
 
             .formLogin(form -> form
 
-                // Página personalizada
                 .loginPage("/login")
 
-                // Spring procesa este POST
                 .loginProcessingUrl("/login")
 
-                // TU HTML utiliza name="email"
                 .usernameParameter("email")
 
-                // TU HTML utiliza name="password"
                 .passwordParameter("password")
 
-                // =================================================
-                // LOGIN CORRECTO
-                // =================================================
+                .successHandler(
+                    (request, response, authentication) -> {
 
-                .successHandler((request, response, authentication) -> {
-
-                    boolean esAdmin =
+                        boolean esAdmin =
                             authentication.getAuthorities()
                                 .stream()
                                 .anyMatch(authority ->
-                                    authority.getAuthority()
+                                    authority
+                                        .getAuthority()
                                         .equals("ROLE_ADMIN")
                                 );
 
-                    if (esAdmin) {
+                        if (esAdmin) {
 
-                        response.sendRedirect(
+                            response.sendRedirect(
                                 "/admin/dashboard"
-                        );
+                            );
 
-                    } else {
+                        } else {
 
-                        response.sendRedirect(
+                            response.sendRedirect(
                                 "/cliente/dashboard"
-                        );
+                            );
+                        }
                     }
-                })
-
-                // =================================================
-                // LOGIN INCORRECTO
-                // =================================================
+                )
 
                 .failureUrl("/login?error")
 
                 .permitAll()
             )
 
-            // =================================================
+            // =====================================================
             // LOGOUT
-            // =================================================
+            // =====================================================
 
             .logout(logout -> logout
 
