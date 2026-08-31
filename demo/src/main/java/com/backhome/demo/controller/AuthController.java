@@ -103,7 +103,7 @@ public class AuthController {
 
 
     // =====================================================
-    // PROCESAR REGISTRO
+    // PROCESAR REGISTRO - DATO STACK
     // =====================================================
 
     @PostMapping("/registro")
