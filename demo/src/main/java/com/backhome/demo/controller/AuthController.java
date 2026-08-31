@@ -103,7 +103,7 @@ public class AuthController {
 
 
     // =====================================================
-    // PROCESAR REGISTRO
+    // PROCESAR REGISTRO DATO STACK
     // =====================================================
 
     @PostMapping("/registro")
@@ -213,7 +213,7 @@ public class AuthController {
 
 
         // -------------------------------------------------
-        // CREAR PERSONA
+        // CREAR PERSONA dato heap
         // -------------------------------------------------
 
         Persona persona = new Persona();
