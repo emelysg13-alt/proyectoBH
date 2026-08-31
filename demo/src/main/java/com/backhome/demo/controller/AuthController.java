@@ -18,6 +18,7 @@ import com.backhome.demo.repository.ClienteRepository;
 import com.backhome.demo.repository.PersonaRepository;
 import com.backhome.demo.repository.TipoDocumentoRepository;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 @Controller
@@ -40,23 +41,52 @@ public class AuthController {
         this.passwordEncoder = passwordEncoder;
     }
 
+
     // =====================================================
     // LOGIN
     // =====================================================
 
     @GetMapping("/login")
-    public String mostrarLogin() {
+    public String mostrarLogin(
+            HttpServletResponse response) {
+
+        /*
+         * Evitamos que el navegador conserve una versión
+         * antigua o incompleta de la página de login.
+         *
+         * Esto es especialmente importante después de
+         * cerrar sesión y volver a /login.
+         */
+
+        response.setHeader(
+                "Cache-Control",
+                "no-cache, no-store, must-revalidate"
+        );
+
+        response.setHeader(
+                "Pragma",
+                "no-cache"
+        );
+
+        response.setDateHeader(
+                "Expires",
+                0
+        );
+
         return "auth/login";
     }
+
 
     // =====================================================
     // REGISTRO
     // =====================================================
 
     @GetMapping("/registro")
-    public String mostrarRegistro(Model model) {
+    public String mostrarRegistro(
+            Model model) {
 
         if (!model.containsAttribute("registroForm")) {
+
             model.addAttribute(
                     "registroForm",
                     new RegistroForm()
@@ -71,6 +101,7 @@ public class AuthController {
         return "auth/registro";
     }
 
+
     // =====================================================
     // PROCESAR REGISTRO
     // =====================================================
@@ -82,6 +113,7 @@ public class AuthController {
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes,
             Model model) {
+
 
         // -------------------------------------------------
         // VALIDACIONES
@@ -96,6 +128,7 @@ public class AuthController {
 
             return "auth/registro";
         }
+
 
         // -------------------------------------------------
         // VALIDAR CONFIRMACIÓN DE CONTRASEÑA
@@ -119,6 +152,7 @@ public class AuthController {
             return "auth/registro";
         }
 
+
         // -------------------------------------------------
         // NORMALIZAR EMAIL
         // -------------------------------------------------
@@ -127,12 +161,15 @@ public class AuthController {
                 .trim()
                 .toLowerCase();
 
+
         // -------------------------------------------------
         // NORMALIZAR DOCUMENTO
         // -------------------------------------------------
 
-        String numeroDocumento = form.getNumeroDocumento()
-                .trim();
+        String numeroDocumento =
+                form.getNumeroDocumento()
+                        .trim();
+
 
         // -------------------------------------------------
         // COMPROBAR EMAIL
@@ -152,6 +189,7 @@ public class AuthController {
 
             return "auth/registro";
         }
+
 
         // -------------------------------------------------
         // COMPROBAR DOCUMENTO
@@ -173,6 +211,7 @@ public class AuthController {
             return "auth/registro";
         }
 
+
         // -------------------------------------------------
         // CREAR PERSONA
         // -------------------------------------------------
@@ -191,9 +230,15 @@ public class AuthController {
                 form.getPrimerNombre().trim()
         );
 
-        // Segundo nombre opcional
+
+        // -------------------------------------------------
+        // SEGUNDO NOMBRE
+        // -------------------------------------------------
+
         if (form.getSegundoNombre() != null &&
-                !form.getSegundoNombre().trim().isEmpty()) {
+                !form.getSegundoNombre()
+                        .trim()
+                        .isEmpty()) {
 
             persona.setSegundoNombre(
                     form.getSegundoNombre().trim()
@@ -204,13 +249,24 @@ public class AuthController {
             persona.setSegundoNombre(null);
         }
 
+
+        // -------------------------------------------------
+        // PRIMER APELLIDO
+        // -------------------------------------------------
+
         persona.setPrimerApellido(
                 form.getPrimerApellido().trim()
         );
 
-        // Segundo apellido opcional
+
+        // -------------------------------------------------
+        // SEGUNDO APELLIDO
+        // -------------------------------------------------
+
         if (form.getSegundoApellido() != null &&
-                !form.getSegundoApellido().trim().isEmpty()) {
+                !form.getSegundoApellido()
+                        .trim()
+                        .isEmpty()) {
 
             persona.setSegundoApellido(
                     form.getSegundoApellido().trim()
@@ -221,23 +277,33 @@ public class AuthController {
             persona.setSegundoApellido(null);
         }
 
+
+        // -------------------------------------------------
+        // EMAIL
+        // -------------------------------------------------
+
         persona.setEmail(email);
+
+
+        // -------------------------------------------------
+        // TELÉFONO
+        // -------------------------------------------------
 
         persona.setNumeroTel(
                 form.getNumeroTel().trim()
         );
 
+
         // -------------------------------------------------
         // CONTRASEÑA
         // -------------------------------------------------
-        // NUNCA guardamos la contraseña directamente.
-        // Siempre se guarda mediante BCrypt.
 
         persona.setPassword(
                 passwordEncoder.encode(
                         form.getPassword()
                 )
         );
+
 
         // -------------------------------------------------
         // ESTADO
@@ -247,6 +313,7 @@ public class AuthController {
                 EstadoPersona.activo
         );
 
+
         // -------------------------------------------------
         // GUARDAR PERSONA
         // -------------------------------------------------
@@ -254,19 +321,24 @@ public class AuthController {
         Persona personaGuardada =
                 personaRepository.save(persona);
 
+
         // -------------------------------------------------
         // CREAR CLIENTE
         // -------------------------------------------------
 
         Cliente cliente = new Cliente();
 
-        cliente.setPersona(personaGuardada);
+        cliente.setPersona(
+                personaGuardada
+        );
+
 
         // -------------------------------------------------
         // GUARDAR CLIENTE
         // -------------------------------------------------
 
         clienteRepository.save(cliente);
+
 
         // -------------------------------------------------
         // REGISTRO EXITOSO
@@ -276,6 +348,7 @@ public class AuthController {
                 "success",
                 "Cuenta creada correctamente. Ahora puedes iniciar sesión."
         );
+
 
         return "redirect:/login";
     }

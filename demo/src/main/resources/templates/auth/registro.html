@@ -1,21 +1,23 @@
 <!DOCTYPE html>
-<html lang="es"
-      xmlns:th="http://www.thymeleaf.org">
+
+<html
+    lang="es"
+    xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-    <title>Crear cuenta | Backhome</title>
+    <title>
+        Crear cuenta | Backhome
+    </title>
+
 
     <style>
-
-        /* =====================================================
-           RESET
-        ===================================================== */
 
         * {
             box-sizing: border-box;
@@ -26,7 +28,9 @@
         }
 
         body {
+
             margin: 0;
+
             min-height: 100vh;
 
             font-family:
@@ -49,11 +53,13 @@
 
 
         /* =====================================================
-           FONDO DECORATIVO
+           FONDO
         ===================================================== */
 
         .background {
+
             position: fixed;
+
             inset: 0;
 
             overflow: hidden;
@@ -63,7 +69,9 @@
             z-index: 0;
         }
 
+
         .blob {
+
             position: absolute;
 
             border-radius: 50%;
@@ -73,40 +81,60 @@
             opacity: .65;
         }
 
+
         .blob.one {
+
             width: 420px;
+
             height: 420px;
 
             top: -190px;
+
             left: -130px;
 
             background: #f8dbe5;
         }
 
+
         .blob.two {
+
             width: 360px;
+
             height: 360px;
 
             right: -150px;
+
             top: 25%;
 
             background: #f7e5d5;
         }
 
+
         .blob.three {
+
             width: 300px;
+
             height: 300px;
 
             left: -120px;
+
             bottom: -130px;
 
             background: #eadff4;
         }
 
+
         .paw {
+
             position: absolute;
 
-            color: rgba(207, 111, 140, .14);
+            color:
+                rgba(
+                    207,
+                    111,
+                    140,
+                    .14
+                );
 
             font-size: 48px;
 
@@ -116,15 +144,19 @@
                 floating 6s ease-in-out infinite;
         }
 
-        .paw.one {
-            top: 15%;
-            left: 6%;
 
-            transform: rotate(-20deg);
+        .paw.one {
+
+            top: 15%;
+
+            left: 6%;
         }
 
+
         .paw.two {
+
             top: 10%;
+
             right: 8%;
 
             font-size: 38px;
@@ -132,8 +164,11 @@
             animation-delay: 1.5s;
         }
 
+
         .paw.three {
+
             bottom: 13%;
+
             right: 7%;
 
             font-size: 55px;
@@ -141,8 +176,11 @@
             animation-delay: 2.5s;
         }
 
+
         .paw.four {
+
             bottom: 7%;
+
             left: 12%;
 
             font-size: 32px;
@@ -150,24 +188,32 @@
             animation-delay: 3.5s;
         }
 
+
         @keyframes floating {
 
             0%,
             100% {
-                transform: translateY(0) rotate(-15deg);
+
+                transform:
+                    translateY(0)
+                    rotate(-15deg);
             }
 
             50% {
-                transform: translateY(-12px) rotate(-8deg);
+
+                transform:
+                    translateY(-12px)
+                    rotate(-8deg);
             }
         }
 
 
         /* =====================================================
-           CONTENEDOR PRINCIPAL
+           PAGINA
         ===================================================== */
 
         .page {
+
             position: relative;
 
             z-index: 1;
@@ -189,7 +235,9 @@
         ===================================================== */
 
         .card {
+
             width: 100%;
+
             max-width: 1080px;
 
             display: grid;
@@ -202,15 +250,31 @@
 
             border-radius: 32px;
 
-            background: rgba(255, 255, 255, .94);
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    .96
+                );
 
-            border: 1px solid rgba(213, 137, 160, .18);
+            border:
+                1px solid
+                rgba(
+                    213,
+                    137,
+                    160,
+                    .18
+                );
 
             box-shadow:
                 0 25px 70px
-                rgba(139, 79, 99, .16);
-
-            backdrop-filter: blur(8px);
+                rgba(
+                    139,
+                    79,
+                    99,
+                    .16
+                );
         }
 
 
@@ -219,15 +283,18 @@
         ===================================================== */
 
         .side {
+
             position: relative;
 
-            padding: 42px 32px;
+            padding:
+                42px 32px;
 
             display: flex;
 
             flex-direction: column;
 
-            justify-content: space-between;
+            justify-content:
+                space-between;
 
             overflow: hidden;
 
@@ -240,23 +307,35 @@
                 );
         }
 
+
         .side::after {
+
             content: "";
 
             position: absolute;
 
             width: 220px;
+
             height: 220px;
 
             right: -110px;
+
             bottom: -100px;
 
             border-radius: 50%;
 
-            background: rgba(255, 255, 255, .35);
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    .35
+                );
         }
 
+
         .brand {
+
             position: relative;
 
             z-index: 1;
@@ -266,31 +345,37 @@
             font-weight: 900;
 
             color: #b95f7b;
-
-            letter-spacing: -.7px;
         }
 
+
         .brand-paw {
+
             display: inline-flex;
 
             width: 42px;
+
             height: 42px;
 
             align-items: center;
+
             justify-content: center;
 
             margin-right: 7px;
 
             border-radius: 14px;
 
-            background: rgba(255, 255, 255, .65);
-
-            box-shadow:
-                0 8px 20px
-                rgba(155, 87, 108, .10);
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    .65
+                );
         }
 
+
         .side-content {
+
             position: relative;
 
             z-index: 1;
@@ -298,37 +383,41 @@
             margin-top: 40px;
         }
 
+
         .animal {
+
             font-size: 76px;
 
             line-height: 1;
 
             margin-bottom: 22px;
 
-            filter:
-                drop-shadow(
-                    0 12px 12px
-                    rgba(111, 66, 81, .12)
-                );
-
             animation:
                 animalFloat 4s ease-in-out infinite;
         }
+
 
         @keyframes animalFloat {
 
             0%,
             100% {
-                transform: translateY(0);
+
+                transform:
+                    translateY(0);
             }
 
             50% {
-                transform: translateY(-8px);
+
+                transform:
+                    translateY(-8px);
             }
         }
 
+
         .side h2 {
-            margin: 0 0 13px;
+
+            margin:
+                0 0 13px;
 
             font-size: 30px;
 
@@ -337,7 +426,9 @@
             color: #513f46;
         }
 
+
         .side p {
+
             margin: 0;
 
             color: #755f67;
@@ -347,10 +438,8 @@
             font-size: 15px;
         }
 
-        .benefits {
-            position: relative;
 
-            z-index: 1;
+        .benefits {
 
             display: grid;
 
@@ -359,7 +448,9 @@
             margin-top: 30px;
         }
 
+
         .benefit {
+
             display: flex;
 
             align-items: center;
@@ -373,8 +464,11 @@
             font-weight: 700;
         }
 
+
         .check {
+
             width: 27px;
+
             height: 27px;
 
             flex-shrink: 0;
@@ -382,20 +476,27 @@
             display: flex;
 
             align-items: center;
+
             justify-content: center;
 
             border-radius: 50%;
 
-            background: rgba(255, 255, 255, .7);
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    .7
+                );
 
             color: #bd637e;
-
-            font-size: 14px;
 
             font-weight: 900;
         }
 
+
         .side-footer {
+
             position: relative;
 
             z-index: 1;
@@ -409,17 +510,22 @@
 
 
         /* =====================================================
-           FORMULARIO
+           CONTENIDO
         ===================================================== */
 
         .content {
-            padding: 38px 42px 42px;
+
+            padding:
+                38px 42px 42px;
         }
 
+
         .top {
+
             display: flex;
 
-            justify-content: space-between;
+            justify-content:
+                space-between;
 
             align-items: center;
 
@@ -428,17 +534,20 @@
             margin-bottom: 28px;
         }
 
+
         .title h1 {
-            margin: 0 0 6px;
+
+            margin:
+                0 0 6px;
 
             font-size: 31px;
 
             color: #4e4046;
-
-            letter-spacing: -.7px;
         }
 
+
         .title p {
+
             margin: 0;
 
             color: #837177;
@@ -446,10 +555,13 @@
             font-size: 14px;
         }
 
+
         .login-link {
+
             flex-shrink: 0;
 
-            padding: 10px 15px;
+            padding:
+                10px 15px;
 
             border-radius: 12px;
 
@@ -462,57 +574,66 @@
             font-size: 13px;
 
             font-weight: 800;
-
-            transition: .2s ease;
-        }
-
-        .login-link:hover {
-            background: #f9e1e8;
-
-            transform: translateY(-1px);
         }
 
 
         /* =====================================================
-           ALERTAS
+           ALERTA
         ===================================================== */
 
         .alert {
-            padding: 13px 15px;
 
-            margin-bottom: 22px;
+            padding:
+                13px 15px;
+
+            margin-bottom: 20px;
 
             border-radius: 13px;
 
-            font-size: 14px;
+            font-size: 13px;
 
             font-weight: 700;
-
-            line-height: 1.4;
         }
 
+
         .alert-error {
+
             color: #923e57;
 
             background: #fde6ec;
 
-            border: 1px solid #f6ccd8;
+            border:
+                1px solid
+                #f6ccd8;
         }
 
 
         /* =====================================================
-           SECCIONES
+           FORMULARIO
         ===================================================== */
 
+        form {
+
+            display: block;
+
+            width: 100%;
+        }
+
+
         .section {
+
             margin-top: 25px;
         }
 
+
         .section:first-of-type {
+
             margin-top: 0;
         }
 
+
         .section-title {
+
             display: flex;
 
             align-items: center;
@@ -528,13 +649,17 @@
             font-weight: 900;
         }
 
+
         .section-icon {
+
             width: 29px;
+
             height: 29px;
 
             display: flex;
 
             align-items: center;
+
             justify-content: center;
 
             border-radius: 9px;
@@ -542,8 +667,6 @@
             background: #fce8ee;
 
             color: #bd637e;
-
-            font-size: 13px;
         }
 
 
@@ -552,16 +675,26 @@
         ===================================================== */
 
         .grid {
+
             display: grid;
 
             grid-template-columns:
-                repeat(2, minmax(0, 1fr));
+                repeat(
+                    2,
+                    minmax(
+                        0,
+                        1fr
+                    )
+                );
 
             gap: 16px;
         }
 
+
         .field.full {
-            grid-column: 1 / -1;
+
+            grid-column:
+                1 / -1;
         }
 
 
@@ -570,6 +703,7 @@
         ===================================================== */
 
         label {
+
             display: block;
 
             margin-bottom: 7px;
@@ -581,21 +715,28 @@
             font-weight: 800;
         }
 
+
         .optional {
+
             color: #a09297;
 
             font-weight: 500;
         }
 
+
         input,
         select {
+
             width: 100%;
 
             height: 48px;
 
-            padding: 0 14px;
+            padding:
+                0 14px;
 
-            border: 1px solid #e9d3da;
+            border:
+                1px solid
+                #e9d3da;
 
             border-radius: 12px;
 
@@ -608,34 +749,30 @@
             font-family: inherit;
 
             font-size: 14px;
-
-            transition:
-                border-color .18s ease,
-                box-shadow .18s ease,
-                background .18s ease;
         }
 
-        input:hover,
-        select:hover {
-            border-color: #dba4b5;
-        }
 
         input:focus,
         select:focus {
-            border-color: #ce7692;
+
+            border-color:
+                #ce7692;
 
             background: white;
 
             box-shadow:
                 0 0 0 3px
-                rgba(217, 130, 154, .12);
+                rgba(
+                    217,
+                    130,
+                    154,
+                    .12
+                );
         }
 
-        input::placeholder {
-            color: #b7aab0;
-        }
 
         .field-error {
+
             margin-top: 6px;
 
             color: #a0435c;
@@ -647,19 +784,22 @@
 
 
         /* =====================================================
-           CONSEJO
+           AVISO
         ===================================================== */
 
         .tip {
+
             display: flex;
 
-            align-items: flex-start;
+            align-items:
+                flex-start;
 
             gap: 10px;
 
             margin-top: 20px;
 
-            padding: 13px 15px;
+            padding:
+                13px 15px;
 
             border-radius: 13px;
 
@@ -672,18 +812,13 @@
             line-height: 1.5;
         }
 
-        .tip-icon {
-            flex-shrink: 0;
-
-            font-size: 16px;
-        }
-
 
         /* =====================================================
            BOTÓN
         ===================================================== */
 
         .submit {
+
             width: 100%;
 
             height: 54px;
@@ -713,23 +848,32 @@
 
             box-shadow:
                 0 10px 24px
-                rgba(190, 102, 130, .23);
+                rgba(
+                    190,
+                    102,
+                    130,
+                    .23
+                );
 
             transition:
                 transform .2s ease,
                 box-shadow .2s ease;
         }
 
+
         .submit:hover {
-            transform: translateY(-2px);
+
+            transform:
+                translateY(-2px);
 
             box-shadow:
                 0 14px 28px
-                rgba(190, 102, 130, .28);
-        }
-
-        .submit:active {
-            transform: translateY(0);
+                rgba(
+                    190,
+                    102,
+                    130,
+                    .28
+                );
         }
 
 
@@ -738,7 +882,9 @@
         ===================================================== */
 
         .bottom-text {
-            margin: 18px 0 0;
+
+            margin:
+                18px 0 0;
 
             text-align: center;
 
@@ -747,16 +893,14 @@
             font-size: 13px;
         }
 
+
         .bottom-text a {
+
             color: #bb607c;
 
             font-weight: 900;
 
             text-decoration: none;
-        }
-
-        .bottom-text a:hover {
-            text-decoration: underline;
         }
 
 
@@ -767,82 +911,55 @@
         @media (max-width: 850px) {
 
             .card {
+
                 grid-template-columns: 1fr;
             }
 
             .side {
+
                 padding: 28px;
 
                 min-height: 290px;
             }
 
-            .side-content {
-                margin-top: 25px;
-            }
-
-            .animal {
-                font-size: 55px;
-
-                margin-bottom: 12px;
-            }
-
-            .side h2 {
-                font-size: 24px;
-            }
-
             .benefits {
+
                 display: none;
             }
-
-            .side-footer {
-                margin-top: 25px;
-            }
-
         }
 
 
         @media (max-width: 600px) {
 
             .page {
+
                 padding: 15px;
             }
 
-            .card {
-                border-radius: 22px;
-            }
-
             .content {
-                padding: 27px 20px 28px;
+
+                padding:
+                    27px 20px 28px;
             }
 
             .top {
-                align-items: flex-start;
 
-                flex-direction: column;
+                align-items:
+                    flex-start;
 
-                gap: 13px;
-            }
-
-            .title h1 {
-                font-size: 27px;
+                flex-direction:
+                    column;
             }
 
             .grid {
+
                 grid-template-columns: 1fr;
             }
 
             .field.full {
+
                 grid-column: auto;
             }
-
-            .side {
-                padding: 25px 22px;
-            }
-
-            .side h2 {
-                font-size: 22px;
-            }
-
         }
 
     </style>
@@ -852,10 +969,6 @@
 
 <body>
 
-
-<!-- =========================================================
-     FONDO
-========================================================= -->
 
 <div class="background">
 
@@ -875,10 +988,6 @@
 
 </div>
 
-
-<!-- =========================================================
-     PAGINA
-========================================================= -->
 
 <div class="page">
 
@@ -912,19 +1021,26 @@
                         🐶
                     </div>
 
+
                     <h2>
+
                         Ayúdanos a que
                         vuelvan a casa.
+
                     </h2>
 
+
                     <p>
+
                         En Backhome conectamos personas
                         que buscan, encuentran y cuidan
                         mascotas.
+
                     </p>
 
 
                     <div class="benefits">
+
 
                         <div class="benefit">
 
@@ -958,6 +1074,7 @@
 
                         </div>
 
+
                     </div>
 
                 </div>
@@ -971,17 +1088,19 @@
 
             </div>
 
+
         </aside>
 
 
         <!-- =================================================
-             CONTENIDO
+             FORMULARIO
         ================================================== -->
 
         <section class="content">
 
 
             <div class="top">
+
 
                 <div class="title">
 
@@ -998,19 +1117,17 @@
 
                 <a
                     href="/login"
-                    th:href="@{/login}"
                     class="login-link">
 
                     Ya tengo cuenta
 
                 </a>
 
+
             </div>
 
 
-            <!-- =================================================
-                 ERROR GENERAL
-            ================================================== -->
+            <!-- ERROR GENERAL -->
 
             <div
                 th:if="${error}"
@@ -1027,21 +1144,17 @@
 
             <!-- =================================================
                  FORMULARIO
+
+                 IMPORTANTE:
+                 NO usamos th:action.
+                 NO usamos CSRF aquí.
             ================================================== -->
 
             <form
-                th:action="@{/registro}"
-                th:object="${registroForm}"
+                action="/registro"
                 method="post"
+                th:object="${registroForm}"
                 autocomplete="on">
-
-
-                <!-- CSRF -->
-
-                <input
-                    type="hidden"
-                    th:name="${_csrf.parameterName}"
-                    th:value="${_csrf.token}">
 
 
                 <!-- =================================================
@@ -1049,6 +1162,7 @@
                 ================================================== -->
 
                 <div class="section">
+
 
                     <div class="section-title">
 
@@ -1074,22 +1188,32 @@
 
                             </label>
 
+
                             <select
                                 id="tipoDocumentoId"
                                 th:field="*{tipoDocumentoId}"
                                 required>
 
-                                <option value="">
+                                <option
+                                    value=""
+                                    disabled>
+
                                     Selecciona una opción
+
                                 </option>
+
 
                                 <option
                                     th:each="tipo : ${tiposDocumento}"
                                     th:value="${tipo.idTDoc}"
                                     th:text="${tipo.nDoc}">
+
+                                    Documento
+
                                 </option>
 
                             </select>
+
 
                             <div
                                 class="field-error"
@@ -1110,13 +1234,15 @@
 
                             </label>
 
+
                             <input
                                 id="numeroDocumento"
                                 type="text"
                                 th:field="*{numeroDocumento}"
                                 maxlength="20"
-                                placeholder="Ej. 1234567890"
+                                placeholder="Número de documento"
                                 required>
+
 
                             <div
                                 class="field-error"
@@ -1137,12 +1263,16 @@
 
                             </label>
 
+
                             <input
                                 id="primerNombre"
                                 type="text"
                                 th:field="*{primerNombre}"
-                                placeholder="Tu nombre"
+                                maxlength="100"
+                                placeholder="Primer nombre"
+                                autocomplete="given-name"
                                 required>
+
 
                             <div
                                 class="field-error"
@@ -1160,18 +1290,27 @@
                             <label for="segundoNombre">
 
                                 Segundo nombre
-
                                 <span class="optional">
-                                    · opcional
+                                    (opcional)
                                 </span>
 
                             </label>
+
 
                             <input
                                 id="segundoNombre"
                                 type="text"
                                 th:field="*{segundoNombre}"
-                                placeholder="Opcional">
+                                maxlength="100"
+                                placeholder="Segundo nombre"
+                                autocomplete="additional-name">
+
+
+                            <div
+                                class="field-error"
+                                th:if="${#fields.hasErrors('segundoNombre')}"
+                                th:errors="*{segundoNombre}">
+                            </div>
 
                         </div>
 
@@ -1186,12 +1325,16 @@
 
                             </label>
 
+
                             <input
                                 id="primerApellido"
                                 type="text"
                                 th:field="*{primerApellido}"
-                                placeholder="Tu apellido"
+                                maxlength="100"
+                                placeholder="Primer apellido"
+                                autocomplete="family-name"
                                 required>
+
 
                             <div
                                 class="field-error"
@@ -1209,20 +1352,29 @@
                             <label for="segundoApellido">
 
                                 Segundo apellido
-
                                 <span class="optional">
-                                    · opcional
+                                    (opcional)
                                 </span>
 
                             </label>
+
 
                             <input
                                 id="segundoApellido"
                                 type="text"
                                 th:field="*{segundoApellido}"
-                                placeholder="Opcional">
+                                maxlength="100"
+                                placeholder="Segundo apellido">
+
+
+                            <div
+                                class="field-error"
+                                th:if="${#fields.hasErrors('segundoApellido')}"
+                                th:errors="*{segundoApellido}">
+                            </div>
 
                         </div>
+
 
                     </div>
 
@@ -1235,13 +1387,14 @@
 
                 <div class="section">
 
+
                     <div class="section-title">
 
                         <span class="section-icon">
-                            💌
+                            📱
                         </span>
 
-                        Datos de contacto
+                        Información de contacto
 
                     </div>
 
@@ -1259,6 +1412,7 @@
 
                             </label>
 
+
                             <input
                                 id="email"
                                 type="email"
@@ -1267,6 +1421,7 @@
                                 autocomplete="email"
                                 placeholder="correo@ejemplo.com"
                                 required>
+
 
                             <div
                                 class="field-error"
@@ -1287,6 +1442,7 @@
 
                             </label>
 
+
                             <input
                                 id="numeroTel"
                                 type="tel"
@@ -1296,6 +1452,7 @@
                                 placeholder="300 000 0000"
                                 required>
 
+
                             <div
                                 class="field-error"
                                 th:if="${#fields.hasErrors('numeroTel')}"
@@ -1303,6 +1460,65 @@
                             </div>
 
                         </div>
+
+
+                        <!-- ESTRATO -->
+
+                        <div class="field">
+
+                            <label for="estrato">
+
+                                Estrato
+                                <span class="optional">
+                                    (opcional)
+                                </span>
+
+                            </label>
+
+
+                            <select
+                                id="estrato"
+                                th:field="*{estrato}">
+
+                                <option value="">
+                                    Selecciona
+                                </option>
+
+                                <option value="1">
+                                    1
+                                </option>
+
+                                <option value="2">
+                                    2
+                                </option>
+
+                                <option value="3">
+                                    3
+                                </option>
+
+                                <option value="4">
+                                    4
+                                </option>
+
+                                <option value="5">
+                                    5
+                                </option>
+
+                                <option value="6">
+                                    6
+                                </option>
+
+                            </select>
+
+
+                            <div
+                                class="field-error"
+                                th:if="${#fields.hasErrors('estrato')}"
+                                th:errors="*{estrato}">
+                            </div>
+
+                        </div>
+
 
                     </div>
 
@@ -1314,6 +1530,7 @@
                 ================================================== -->
 
                 <div class="section">
+
 
                     <div class="section-title">
 
@@ -1339,6 +1556,7 @@
 
                             </label>
 
+
                             <input
                                 id="password"
                                 type="password"
@@ -1347,6 +1565,7 @@
                                 autocomplete="new-password"
                                 placeholder="Mínimo 6 caracteres"
                                 required>
+
 
                             <div
                                 class="field-error"
@@ -1367,6 +1586,7 @@
 
                             </label>
 
+
                             <input
                                 id="confirmPassword"
                                 type="password"
@@ -1376,6 +1596,7 @@
                                 placeholder="Repite tu contraseña"
                                 required>
 
+
                             <div
                                 class="field-error"
                                 th:if="${#fields.hasErrors('confirmPassword')}"
@@ -1383,6 +1604,7 @@
                             </div>
 
                         </div>
+
 
                     </div>
 
@@ -1395,14 +1617,16 @@
 
                 <div class="tip">
 
-                    <span class="tip-icon">
+                    <span>
                         🛡️
                     </span>
 
                     <span>
+
                         Tu contraseña se protege mediante
-                        <strong>BCrypt</strong>. No se guarda
-                        directamente como texto.
+                        <strong>BCrypt</strong>.
+                        No se guarda directamente como texto.
+
                     </span>
 
                 </div>
@@ -1416,8 +1640,7 @@
                     type="submit"
                     class="submit">
 
-                    Crear mi cuenta
-                    &nbsp; 🐾
+                    Crear mi cuenta 🐾
 
                 </button>
 
@@ -1429,7 +1652,7 @@
 
                 ¿Ya tienes una cuenta?
 
-                <a th:href="@{/login}">
+                <a href="/login">
 
                     Inicia sesión
 
@@ -1445,6 +1668,7 @@
 
 
 </div>
+
 
 </body>
 
