@@ -48,10 +48,7 @@ public class Persona {
     @Column(name = "numero_tel", nullable = false)
     private String numeroTel;
 
-    /*
-     * Estrato se mantiene porque otras partes del proyecto lo utilizan,
-     * pero NO pertenece al mapeo de la tabla personas.
-     */
+
     @Transient
     private Integer estrato;
 
