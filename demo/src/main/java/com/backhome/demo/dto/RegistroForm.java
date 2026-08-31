@@ -30,7 +30,6 @@ public class RegistroForm {
     @NotBlank(message = "El número de teléfono es obligatorio.")
     private String numeroTel;
 
-    private Integer estrato;
 
     @NotBlank(message = "La contraseña es obligatoria.")
     @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres.")
@@ -66,9 +65,6 @@ public class RegistroForm {
 
     public String getNumeroTel() { return numeroTel; }
     public void setNumeroTel(String numeroTel) { this.numeroTel = numeroTel; }
-
-    public Integer getEstrato() { return estrato; }
-    public void setEstrato(Integer estrato) { this.estrato = estrato; }
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
