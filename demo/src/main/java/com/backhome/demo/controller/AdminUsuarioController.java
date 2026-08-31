@@ -359,7 +359,6 @@ public class AdminUsuarioController {
         );
         usuario.setEmail(email);
         usuario.setNumeroTel(numeroTel.trim());
-        usuario.setEstrato(estrato);
 
         personaRepository.save(usuario);
 
