@@ -101,7 +101,7 @@ public class AuthController {
         return "auth/registro";
     }
 
-
+ 
     // =====================================================
     // PROCESAR REGISTRO - DATO STACK
     // =====================================================
